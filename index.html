@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Annie 的暴富人生</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'PingFang TC',sans-serif;background:#F5FAFA;color:#2D2D2D;font-size:17px}
+.hdr{background:#2D2D2D;color:#fff;padding:0 1rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:99;-webkit-tap-highlight-color:transparent}
+.logo{font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.logo b{color:#0ABAB5}
+.nav{display:flex;gap:2px}
+.nb{background:none;border:none;color:rgba(255,255,255,.4);font-family:inherit;font-size:13px;font-weight:600;padding:8px 12px;border-radius:7px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.nb.on{background:rgba(10,186,181,.15);color:#0ABAB5}
+.main{max-width:1320px;margin:0 auto;padding:1rem;position:relative;z-index:1}
+.view{display:none}.view.on{display:block}
+
+/* TOP STATS - 看板用 4欄 */
+.stats5k{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem}
+@media(max-width:800px){.stats5k{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:480px){.stats5k{grid-template-columns:repeat(2,1fr)}}
+/* TOP STATS - 清單用 5欄 */
+.stats5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem}
+@media(max-width:800px){.stats5{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:500px){.stats5{grid-template-columns:repeat(2,1fr)}}
+.sc{background:#fff;border:1px solid #D4F0EE;border-radius:10px;padding:12px 14px}
+.sl{font-size:13px;font-weight:600;color:#5A9E99;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.sv{font-size:24px;font-weight:300;font-family:'Futura','Century Gothic',sans-serif;color:#2D2D2D}
+.ss{font-size:13px;color:#5A9E99;margin-top:1px}
+
+/* UPCOMING - 只在看板顯示 */
+.upcoming{background:#fff;border:1px solid #D4F0EE;border-radius:12px;padding:16px 20px;margin-bottom:1rem}
+.upcoming-title{font-size:13px;font-weight:700;color:#5A9E99;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.upcoming-title::after{content:'';flex:1;height:1px;background:#EEF8F7}
+.up-item{display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #F0F9F8}
+.up-item:last-child{border-bottom:none;padding-bottom:0}
+.up-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.up-line{width:2px;height:34px;border-radius:2px;flex-shrink:0}
+.up-info{min-width:0}
+.up-brand{font-size:15px;font-weight:700;color:#2D2D2D}
+.up-detail{font-size:13px;color:#5A9E99;margin-top:1px}
+.up-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.up-stage{font-size:13px;font-weight:600;color:#5A9E99;background:#EEF8F7;padding:2px 9px;border-radius:20px}
+.up-days{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:300;color:#2D2D2D;min-width:52px;text-align:right}
+.up-empty{font-size:13px;color:#7ED8D5;text-align:center;padding:6px 0}
+
+/* SECTION */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.st{font-size:17px;font-weight:800}
+.bp{background:#0ABAB5;color:#fff;border:none;border-radius:8px;padding:10px 16px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:start}
+@media(max-width:1100px){.kanban{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.kanban{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:380px){.kanban{grid-template-columns:1fr}}
+.kcol{background:#F8FCFC;border:1px solid #D4F0EE;border-radius:10px;padding:9px;min-height:160px}
+.kct{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#3D7875;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.kdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.kn{margin-left:auto;font-size:13px;font-weight:600;color:#7ED8D5}
+.kcard{background:#fff;border:1px solid #E8F7F6;border-radius:8px;padding:9px 11px;margin-bottom:6px;cursor:pointer;transition:border-color .15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.kcard:hover{border-color:#0ABAB5}
+.kcard:active{border-color:#0ABAB5;background:#F8FCFC}
+.kb{font-size:15px;font-weight:700;margin-bottom:2px;color:#2D2D2D}
+.kt{font-size:13px;color:#5A9E99;margin-bottom:6px}
+.km{display:flex;justify-content:space-between;align-items:center}
+.kf{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:300;color:#2D2D2D}
+.kd{font-size:13px;color:#7ED8D5}
+.kw{border-left:2px solid #E8A87C;padding-left:6px;font-size:13px;color:#B07840;margin-top:6px}
+.kw.err{border-color:#E07C72;color:#B04040}
+.ke{text-align:center;padding:16px 0;color:#C8ECEB;font-size:11px}
+
+/* TABLE */
+.twrap{background:#fff;border:1px solid #D4F0EE;border-radius:10px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5A9E99;padding:10px 12px;text-align:left;background:#F8FCFC;border-bottom:1px solid #D4F0EE;white-space:nowrap}
+tbody tr{border-bottom:1px solid #EEF8F7}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#F8FCFC}
+td{padding:10px 12px;font-size:13px;vertical-align:middle;white-space:nowrap}
+.td-type{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbr{font-weight:700}
+.tfe{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:500;color:#0ABAB5}
+.tda{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:300;color:#5A9E99}
+.ib{background:none;border:1px solid #D4F0EE;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:13px;color:#5A9E99}
+.ib:hover{border-color:#0ABAB5;color:#0ABAB5}
+
+/* BADGE */
+.badge{display:inline-flex;padding:2px 8px;border-radius:20px;font-size:13px;font-weight:600;white-space:nowrap}
+.b-script{background:#EBF4FB;color:#2471A3}
+.b-shoot {background:#FDF0E6;color:#A0602A}
+.b-edit  {background:#F0EBFA;color:#6B3FAA}
+.b-review{background:#FCEAF5;color:#A03080}
+.b-pub   {background:#FDF9E0;color:#B8960A}   /* 橘色 - 待發布 */
+.b-pay   {background:#FDE8E6;color:#B84040}
+.b-done  {background:#EEF8F7;color:#3D7875}
+
+/* CHARTS */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.cgrid{grid-template-columns:1fr}}
+.ccard{background:#fff;border:1px solid #D4F0EE;border-radius:10px;padding:16px 18px}
+.ctit{font-size:13px;font-weight:700;margin-bottom:12px;color:#2D2D2D}
+.cwrap{position:relative;height:200px}
+
+/* 收入摘要卡 in charts */
+.income-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:700px){.income-grid{grid-template-columns:repeat(2,1fr)}}
+.ic{background:#F8FCFC;border:1px solid #D4F0EE;border-radius:8px;padding:12px 14px}
+.il{font-size:13px;font-weight:600;color:#5A9E99;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.iv{font-size:18px;font-weight:300;font-family:'Futura','Century Gothic',sans-serif}
+.is{font-size:13px;color:#7ED8D5;margin-top:1px}
+
+/* TRACKER */
+/* 追蹤頁頂部小統計 */
+.tracker-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:1rem}
+@media(max-width:900px){.tracker-stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:500px){.tracker-stats{grid-template-columns:repeat(2,1fr)}}
+.tsc{background:#fff;border:1px solid #D4F0EE;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px}
+.tsc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tsc-info{min-width:0}
+.tsc-label{font-size:13px;font-weight:600;color:#5A9E99;white-space:nowrap}
+.tsc-val{font-size:18px;font-weight:300;font-family:'Futura','Century Gothic',sans-serif;color:#2D2D2D}
+/* 追蹤清單 */
+.tracker{display:flex;flex-direction:column;gap:10px}
+.trsec{background:#fff;border:1px solid #D4F0EE;border-radius:10px;overflow:hidden}
+.trsec-hd{padding:11px 16px;display:flex;align-items:center;gap:8px}
+.trsec-dot{width:8px;height:8px;border-radius:50%}
+.trsec-title{font-size:15px;font-weight:700;color:#2D2D2D}
+.trsec-count{font-size:13px;color:#5A9E99;margin-left:auto;font-family:'Futura','Century Gothic',sans-serif;font-weight:300}
+.tritem{display:flex;align-items:center;gap:12px;padding:9px 16px;border-top:1px solid #EEF8F7}
+.tr-brand{font-size:15px;font-weight:700;color:#2D2D2D}
+.tr-type{font-size:13px;color:#5A9E99;margin-top:1px}
+.tr-date{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:300;color:#7ED8D5;margin-left:auto;white-space:nowrap}
+.tr-days{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:300;padding:2px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.tr-days.ok{background:#EEF8F7;color:#3D7875}
+.tr-days.warn{background:#FDF0E6;color:#A06030}
+.tr-days.urgent{background:#FDE8E6;color:#B84040}
+.tr-fee{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:300;color:#5A9E99;min-width:90px;text-align:right}
+.tr-empty{padding:10px 16px;font-size:13px;color:#7ED8D5;border-top:1px solid #EEF8F7}
+
+/* MODAL */
+.mbg{display:none;position:fixed;inset:0;background:rgba(45,45,45,.4);z-index:200;align-items:center;justify-content:center;padding:1rem;-webkit-overflow-scrolling:touch}
+.mbg.on{display:flex}
+.modal{background:#fff;border-radius:14px;padding:22px;width:480px;max-width:calc(100vw - 2rem);max-height:85vh;overflow-y:auto;border:1px solid #D4F0EE;-webkit-overflow-scrolling:touch}
+.modal h3{font-size:17px;font-weight:800;margin-bottom:16px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fr.full{grid-column:1/-1}
+.fsec{grid-column:1/-1;font-size:13px;font-weight:700;color:#5A9E99;letter-spacing:.06em;text-transform:uppercase;padding-top:8px;border-top:1px solid #EEF8F7;margin-top:2px}
+.fr label{display:block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5A9E99;margin-bottom:4px}
+.fr input,.fr select{width:100%;background:#F8FCFC;border:1px solid #D4F0EE;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:13px;color:#2D2D2D;outline:none}
+.fr input:focus,.fr select:focus{border-color:#0ABAB5;background:#fff}
+.mact{display:flex;gap:8px;margin-top:16px}
+.bcl{flex:1;background:none;border:1px solid #D4F0EE;border-radius:8px;padding:12px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation}
+.bsv{flex:2;background:#0ABAB5;color:#fff;border:none;border-radius:8px;padding:12px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="logo"><b>✦</b> Annie 的暴富人生</div>
+  <nav class="nav">
+    <button class="nb on" onclick="sv('kanban')">總覽</button>
+    <button class="nb" onclick="sv('table')">清單</button>
+    <button class="nb" onclick="sv('charts')">圖表</button>
+    <button class="nb" onclick="sv('tracker')">追蹤</button>
+  </nav>
+</header>
+
+<main class="main">
+  <!-- 總覽 -->
+  <div class="view on" id="view-kanban">
+    <div class="stats5k" id="stats-kanban"></div>
+    <div class="upcoming" id="upcoming"></div>
+    <div class="sh"><div class="st">合作看板</div><button class="bp" onclick="openM()">＋ 新增</button></div>
+    <div class="kanban" id="board"></div>
+  </div>
+
+  <!-- 清單 -->
+  <div class="view" id="view-table">
+    <div class="stats5" id="stats-table"></div>
+    <div class="sh"><div class="st">所有合作</div><button class="bp" onclick="openM()">＋ 新增</button></div>
+    <div class="twrap"><table>
+      <thead><tr>
+        <th onclick="sortTable('brand')" style="cursor:pointer">品牌 <span id="sort-brand"></span></th>
+        <th>項目</th>
+        <th onclick="sortTable('fee')" style="cursor:pointer">費用 <span id="sort-fee"></span></th>
+        <th onclick="sortTable('sc')" style="cursor:pointer">腳本日 <span id="sort-sc"></span></th>
+        <th onclick="sortTable('sh')" style="cursor:pointer">拍攝日 <span id="sort-sh"></span></th>
+        <th onclick="sortTable('dr')" style="cursor:pointer">交稿日 <span id="sort-dr"></span></th>
+        <th onclick="sortTable('pd')" style="cursor:pointer">發文日 <span id="sort-pd"></span></th>
+        <th onclick="sortTable('py')" style="cursor:pointer">撥款日 <span id="sort-py"></span></th>
+        <th onclick="sortTable('ar')" style="cursor:pointer">實際收款日 <span id="sort-ar"></span></th>
+        <th onclick="sortTable('status')" style="cursor:pointer">狀態 <span id="sort-status"></span></th>
+        <th>備註</th><th></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table></div>
+  </div>
+
+  <!-- 圖表 -->
+  <div class="view" id="view-charts">
+    <div class="cgrid">
+      <div class="ccard"><div class="ctit">月份收入趨勢</div><div class="cwrap"><canvas id="cm"></canvas></div></div>
+      <div class="ccard"><div class="ctit">品牌收入排名</div><div class="cwrap"><canvas id="cb"></canvas></div></div>
+      <div class="ccard"><div class="ctit">合作狀態分佈</div><div class="cwrap"><canvas id="cs"></canvas></div></div>
+      <div class="ccard"><div class="ctit">每月平均案件費用</div><div class="cwrap"><canvas id="ca"></canvas></div></div>
+      <div class="ccard"><div class="ctit">本月 vs 下月預計收入</div><div class="cwrap"><canvas id="cmonth"></canvas></div></div>
+      <div class="ccard"><div class="ctit">收款狀態（未撥款 vs 累計）</div><div class="cwrap"><canvas id="cpay"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- 追蹤 -->
+  <div class="view" id="view-tracker">
+    <div class="tracker-stats" id="tracker-stats"></div>
+    <div class="tracker" id="tracker"></div>
+  </div>
+</main>
+
+<!-- MODAL -->
+<div class="mbg" id="modal" onclick="closeM(event)">
+  <div class="modal">
+    <h3 id="mtitle">新增品牌合作</h3>
+    <div class="fg">
+      <div class="fsec">基本資訊</div>
+      <div class="fr full"><label>合作品牌</label><input id="fb" type="text" placeholder="例：NARS"></div>
+      <div class="fr full"><label>合作項目</label><input id="ftype" type="text" placeholder="例：開箱業配"></div>
+      <div class="fr"><label>費用 (NT$)</label><input id="ffee" type="number" placeholder="0"></div>
+      <div class="fr"><label>狀態</label>
+        <select id="fst">
+          <option>腳本撰寫</option><option>待拍攝</option><option>待剪輯</option>
+          <option>校稿中</option><option>待發布</option><option>預計收款</option><option>已完成</option>
+        </select>
+      </div>
+      <div class="fsec">時間軸</div>
+      <div class="fr"><label>腳本日期</label><input id="fsc" type="date"></div>
+      <div class="fr"><label>拍攝日</label><input id="fsh" type="date"></div>
+      <div class="fr"><label>交稿日</label><input id="fdr" type="date"></div>
+      <div class="fr"><label>發文日</label><input id="fpd" type="date"></div>
+      <div class="fr"><label>預計撥款日</label><input id="fpy" type="date"></div>
+      <div class="fr"><label>實際收款日</label><input id="far" type="date"></div>
+      <div class="fsec">其他</div>
+      <div class="fr full"><label>備註</label><input id="fnote" type="text" placeholder="例：需附發票"></div>
+    </div>
+    <div class="mact">
+      <button class="bcl" onclick="closeM()">取消</button>
+      <button class="bsv" onclick="saveE()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const KANBAN_ST=['腳本撰寫','待拍攝','待剪輯','校稿中','待發布','預計收款'];
+const SC={
+  '腳本撰寫':{b:'b-script',d:'#2471A3'},
+  '待拍攝':  {b:'b-shoot', d:'#C8783A'},
+  '待剪輯':  {b:'b-edit',  d:'#7D4FC0'},
+  '校稿中':  {b:'b-review',d:'#B03090'},
+  '待發布':  {b:'b-pub',   d:'#C9A800'},  /* 橘色 */
+  '預計收款':{b:'b-pay',   d:'#C84040'},
+  '已完成':  {b:'b-done',  d:'#3D7875'},
+};
+const PAL=['#0ABAB5','#2471A3','#C8783A','#7D4FC0','#B03090','#C9A800','#C84040'];
+
+const DL_MAP={
+  '腳本撰寫':{key:'sc',label:'腳本'},
+  '待拍攝':  {key:'sh',label:'拍攝'},
+  '待剪輯':  {key:'dr',label:'交稿'},
+  '校稿中':  {key:'dr',label:'交稿'},
+  '待發布':  {key:'pd',label:'發文'},
+  '預計收款':{key:'py',label:'撥款'},
+};
+const SCAN_DL=[
+  {key:'sc',label:'腳本',statuses:['腳本撰寫']},
+  {key:'sh',label:'拍攝',statuses:['待拍攝']},
+  {key:'dr',label:'交稿',statuses:['待剪輯','校稿中']},
+  {key:'pd',label:'發文',statuses:['待發布']},
+  {key:'py',label:'撥款',statuses:['預計收款']},
+];
+
+let data=[
+  // ── 等待匯款 ──
+  {id:1,  brand:'Numbuzin',           type:'五支影片 1號系列/數字面膜/Fwee唇釉/Fwee妝前/No9精華（美金付款）', fee:37834, sc:'',sh:'',dr:'',pd:'',py:'2026-05-30',ar:'',status:'預計收款',note:'6000*5 完成後匯款'},
+  {id:2,  brand:'十方力',             type:'六篇Reels MM*4 白美球*2',                                        fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-07',ar:'',status:'預計收款',note:'產品費用待確認'},
+  {id:3,  brand:'雪花秀 AMOREPACIFIC',type:'2個月影片授權 $3000*2個月',                                      fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'2026-02-28',ar:'',status:'預計收款',note:''},
+  {id:4,  brand:'Dr.WU',              type:'玻尿酸系列',                                                    fee:6000,  sc:'',sh:'',dr:'',pd:'2026-01-04',py:'2026-03-10',ar:'',status:'預計收款',note:''},
+  {id:5,  brand:'Ozio',               type:'卵殼膜系列+廣告主授權1個月+素材授權三個月',                       fee:13000, sc:'',sh:'',dr:'',pd:'2026-02-12',py:'2026-05-25',ar:'',status:'預計收款',note:''},
+  {id:6,  brand:'菲那絲',             type:'洗髮精系列',                                                    fee:8000,  sc:'',sh:'',dr:'',pd:'2026-04-09',py:'2026-05-30',ar:'',status:'預計收款',note:''},
+  {id:7,  brand:'Dr.WU',              type:'超逆齡肌因再生精華',                                            fee:6000,  sc:'',sh:'',dr:'',pd:'2026-04-11',py:'2026-06-11',ar:'',status:'預計收款',note:''},
+  {id:8,  brand:'Kamee',              type:'客製化保健品',                                                  fee:9000,  sc:'',sh:'',dr:'',pd:'2026-04-17',py:'2026-06-16',ar:'',status:'預計收款',note:''},
+  {id:9,  brand:'OLAY IPG DXTRA',     type:'水光小白瓶',                                                   fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-08',py:'2026-07-08',ar:'',status:'預計收款',note:''},
+  {id:10, brand:'Dr. May 軒郁國際',   type:'紫色防曬',                                                     fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-12',py:'2026-06-10',ar:'',status:'預計收款',note:''},
+  {id:11, brand:'TimePhoria 豐光',    type:'7000*6支影片 優惠後39000 分兩次 2nd',                          fee:19500, sc:'',sh:'',dr:'',pd:'2026-06-15',py:'',ar:'',status:'預計收款',note:''},
+  // ── 已完成 2026 ──
+  {id:12, brand:'La Glow 毅達創意',   type:'雪凝乳',                fee:8000,  sc:'',sh:'',dr:'',pd:'2026-01-23',py:'2026-02-10',ar:'2026-02-10',status:'已完成',note:'收款 2026/2/10'},
+  {id:13, brand:'OLAY IPG DXTRA',     type:'限動+廣告一週',         fee:2000,  sc:'',sh:'',dr:'',pd:'2025-11-05',py:'2026-01-26',ar:'2026-01-26',status:'已完成',note:'收款 2026/1/26'},
+  {id:14, brand:'KATE',               type:'粉霜*6色、遮瑕液*10色 廣告主*1', fee:8000, sc:'',sh:'',dr:'',pd:'2025-12-19',py:'2026-02-19',ar:'2026-02-09',status:'已完成',note:'收款 2026/2/9'},
+  {id:15, brand:'十方力',             type:'六篇Reels MM*4 白美球*2 第二筆', fee:12929, sc:'',sh:'',dr:'',pd:'',py:'2026-02-07',ar:'2026-02-09',status:'已完成',note:'收款 2026/2/9'},
+  {id:16, brand:'wakemake 天驀',      type:'腮紅液 眼影盤',         fee:5000,  sc:'',sh:'',dr:'',pd:'2026-03-10',py:'2026-05-10',ar:'2026-04-29',status:'已完成',note:'收款 2026/4/29'},
+  {id:17, brand:'未來美 軒郁國際',    type:'PDRN針管系列',          fee:8000,  sc:'',sh:'',dr:'',pd:'2026-03-06',py:'2026-03-30',ar:'2026-03-19',status:'已完成',note:'收款 2026/3/19'},
+  {id:18, brand:'TrueTisane 愛牧遊',  type:'抗老安瓶',              fee:9000,  sc:'',sh:'',dr:'',pd:'2026-03-11',py:'2026-03-30',ar:'2026-03-16',status:'已完成',note:'收款 2026/3/16'},
+  {id:19, brand:'Bioderma 台灣諾奧思',type:'屈臣氏帶逛',            fee:8000,  sc:'',sh:'',dr:'',pd:'2026-03-12',py:'2026-05-30',ar:'2026-04-30',status:'已完成',note:'收款 2026/4/30'},
+  {id:20, brand:'OLAY IPG DXTRA',     type:'胜肽超紅瓶',            fee:8000,  sc:'',sh:'',dr:'',pd:'2026-01-10',py:'2026-03-04',ar:'2026-03-24',status:'已完成',note:'收款 2026/3/24'},
+  {id:21, brand:'AM Fairyland',       type:'腮紅液 廣告主一個月',   fee:7000,  sc:'',sh:'',dr:'',pd:'2025-11-28',py:'2026-02-25',ar:'2026-02-25',status:'已完成',note:'收款 2026/2/25'},
+  {id:22, brand:'本真',               type:'洗髮精',                fee:10936, sc:'',sh:'',dr:'',pd:'2025-11-20',py:'2025-12-15',ar:'2026-01-30',status:'已完成',note:'收款 2026/1/30'},
+  {id:23, brand:'Sexy look',          type:'仙人掌換膚三件組',      fee:7000,  sc:'',sh:'',dr:'',pd:'2025-12-01',py:'2026-01-28',ar:'2026-01-28',status:'已完成',note:'收款 2026/1/28'},
+  {id:24, brand:'TrueTisane 愛牧遊',  type:'限動一則帶連結',        fee:2000,  sc:'',sh:'',dr:'',pd:'2026-01-01',py:'2025-01-30',ar:'2026-01-15',status:'已完成',note:'收款 2026/1/15'},
+  {id:25, brand:'TimePhoria 豐光',    type:'快閃活動*1/腮紅液*1 廣告各一個月 分兩次匯', fee:13000, sc:'',sh:'',dr:'',pd:'2025-10-30',py:'2025-11-30',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
+  {id:26, brand:'TimePhoria 豐光',    type:'TT廣告',                fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'2025-11-30',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
+  {id:27, brand:'牛爾老師',           type:'京城之霜 FB+IG廣告主授權/1周', fee:6000, sc:'',sh:'',dr:'',pd:'2025-11-01',py:'2025-12-05',ar:'2025-12-10',status:'已完成',note:'收款 2025/12/10'},
+  {id:28, brand:'Parnell',            type:'亮白氣墊 廣告一個月',   fee:8000,  sc:'',sh:'',dr:'',pd:'2025-11-25',py:'2025-12-30',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
+  {id:29, brand:'La Glow 毅達創意',   type:'PDRN面膜+痘痘面膜 廣告一個月', fee:8000, sc:'',sh:'',dr:'',pd:'2025-11-27',py:'2025-12-10',ar:'2025-12-10',status:'已完成',note:'收款 2025/12/10'},
+  {id:30, brand:'Dr. May 軒郁國際',   type:'外泌體續約 12/4~1/3',  fee:5000,  sc:'',sh:'',dr:'',pd:'2025-12-04',py:'2026-01-10',ar:'2025-12-24',status:'已完成',note:'收款 2025/12/24'},
+  {id:31, brand:'香港商美美箱',       type:'2026年約共$60000 結清費', fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-05',ar:'2025-12-30',status:'已完成',note:'收款 2025/12/30'},
+  {id:32, brand:'Nivea 亞科',         type:'卸妝水+廣告',           fee:7000,  sc:'',sh:'',dr:'',pd:'2025-09-22',py:'2025-11-30',ar:'2025-12-01',status:'已完成',note:'收款 2025/12/1'},
+  {id:33, brand:'ButyBox 髮本對策',   type:'養髮液影片 廣告主*1 包匡*1', fee:10000, sc:'',sh:'',dr:'',pd:'2025-10-03',py:'2025-11-30',ar:'2025-12-02',status:'已完成',note:'收款 2025/12/2'},
+  {id:34, brand:'ButyBox',            type:'la MEMORIA沐浴乳 可瑞絲角蛋白 授權半年', fee:20000, sc:'',sh:'',dr:'',pd:'',py:'2025-11-30',ar:'2025-12-02',status:'已完成',note:'收款 2025/12/2'},
+  {id:35, brand:'TrueTisane 愛牧遊',  type:'奇蹟逆齡修護組',       fee:7000,  sc:'',sh:'',dr:'',pd:'2025-10-14',py:'',ar:'2025-11-03',status:'已完成',note:'收款 2025/11/3'},
+  {id:36, brand:'Attenir',            type:'淨顏亮膚卸妝油 廣告*1', fee:8000,  sc:'',sh:'',dr:'',pd:'2025-10-20',py:'2025-11-30',ar:'2025-11-25',status:'已完成',note:'收款 2025/11/25'},
+  {id:37, brand:'Solone 寶琦國際',    type:'雙11彩妝影片 廣告主一個月', fee:7000, sc:'',sh:'',dr:'',pd:'2025-11-05',py:'2025-11-30',ar:'2025-12-01',status:'已完成',note:'收款 2025/12/1'},
+  {id:38, brand:'香港商美美箱',       type:'年約第三筆 PONY/IM廣告', fee:18000, sc:'',sh:'',dr:'',pd:'',py:'2025-12-05',ar:'2025-12-01',status:'已完成',note:'收款 2025/12/1'},
+  {id:39, brand:'Dr. May 軒郁國際',   type:'紅外密精華',            fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2025-11-10',ar:'2025-11-20',status:'已完成',note:'收款 2025/11/20'},
+  {id:40, brand:'香港商美美箱',       type:'2026年約 第二筆',       fee:18000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-31',status:'已完成',note:'收款 2025/10/31'},
+  {id:41, brand:'Skintific 豐光',     type:'霧面防曬*1/維他命C精華*1 廣告各一個月', fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-30',status:'已完成',note:'收款 2025/10/30'},
+  {id:42, brand:'Naveen',             type:'影片貼文 買斷照片2張 廣告主3個月', fee:15000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-17',status:'已完成',note:'收款 2025/10/17'},
+  {id:43, brand:'J-Lin 品創',         type:'廣告一個月續約',        fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-08',status:'已完成',note:'收款 2025/10/8'},
+  {id:44, brand:'J-Lin 品創',         type:'新版火山岩滾輪1+1 刷具旅行組 廣告', fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-08',status:'已完成',note:'收款 2025/10/8'},
+  {id:45, brand:'Dr. May 軒郁國際',   type:'影片及照片買斷',        fee:16000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-02',status:'已完成',note:'收款 2025/10/2'},
+  {id:46, brand:'香港商美美箱',       type:'2026年約 第一筆',       fee:18000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-30',status:'已完成',note:'收款 2025/9/30'},
+  {id:47, brand:'Bioré 美周報',       type:'舒柔淨膚卸粧水',        fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-10',status:'已完成',note:'收款 2025/9/10'},
+  {id:48, brand:'Dr. May 軒郁國際',   type:'限動',                  fee:1500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-04',status:'已完成',note:'收款 2025/9/4'},
+  {id:49, brand:'香港商美美箱',       type:"I'm meme 7月投廣素材",  fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-01',status:'已完成',note:'收款 2025/9/1'},
+  {id:50, brand:'Dr. May 軒郁國際',   type:'早C晚B',                fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-28',status:'已完成',note:'收款 2025/8/28'},
+  {id:51, brand:'MEDITHERAPY',        type:'粉潤光系列(精華＋乳霜)', fee:6970,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-25',status:'已完成',note:'收款 2025/8/25'},
+  {id:52, brand:'TrueTisane 愛牧遊',  type:'防曬',                  fee:7000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-15',status:'已完成',note:'收款 2025/8/15'},
+  {id:53, brand:'BeautyPlayer 好玩客',type:'極透淨膚清潔面膜',      fee:9000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-11',status:'已完成',note:'收款 2025/8/11'},
+  {id:54, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-11',status:'已完成',note:'收款 2025/8/11'},
+  {id:55, brand:'Dr. May 軒郁國際',   type:'潤色防曬',              fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-06',status:'已完成',note:'收款 2025/8/6'},
+  {id:56, brand:'Repavar',            type:'100%純玫瑰果油',        fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-25',status:'已完成',note:'收款 2025/7/25'},
+  {id:57, brand:'Bello.U',            type:'肉毒眼霜',              fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-15',status:'已完成',note:'收款 2025/7/15'},
+  {id:58, brand:'Dr. May 軒郁國際',   type:'限動帶連結',            fee:1500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-10',status:'已完成',note:'收款 2025/7/10'},
+  {id:59, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-10',status:'已完成',note:'收款 2025/7/10'},
+  {id:60, brand:'香港商美美箱',       type:'Pony Effect廣告費',     fee:6400,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-01',status:'已完成',note:'收款 2025/7/1'},
+  {id:61, brand:'Dr. May 軒郁國際',   type:'防曬續約',              fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-19',status:'已完成',note:'收款 2025/6/19'},
+  {id:62, brand:'Mude',               type:'打亮系列',              fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-16',status:'已完成',note:'收款 2025/6/16'},
+  {id:63, brand:'La Glow 毅達創意',   type:'美體噴霧',              fee:7000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-10',status:'已完成',note:'收款 2025/6/10'},
+  {id:64, brand:'Dr. May 軒郁國際',   type:'清爽防曬',              fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-22',status:'已完成',note:'收款 2025/5/22'},
+  {id:65, brand:'Miidel',             type:'花瓣面膜',              fee:5656,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-15',status:'已完成',note:'收款 2025/5/15'},
+  {id:66, brand:'牛爾老師',           type:'海生竹精華及水凝膜 FB+IG廣告主一個月', fee:9000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-10',status:'已完成',note:'收款 2025/5/10'},
+  {id:67, brand:'PSK',                type:'防曬組',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-05',status:'已完成',note:'收款 2025/5/5'},
+  {id:68, brand:'香港商美美箱',       type:'2025年約',              fee:54000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-01',status:'已完成',note:'收款 2025/5/1'},
+  {id:69, brand:'香港商美美箱',       type:'Pony Effect氣墊組',     fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
+  {id:70, brand:'SHISEIDO 資生堂',    type:'濾鏡美顏日間防護精華',  fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
+  {id:71, brand:'TrueTisane 愛牧遊',  type:'人蔘面膜',              fee:7000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
+  {id:72, brand:'ULIKE',              type:'超光炮',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
+  {id:73, brand:'Solone',             type:'蝦皮工具組',            fee:17000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-29',status:'已完成',note:'收款 2025/4/29'},
+  {id:74, brand:'Relove',             type:'泥膜組合',              fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-17',status:'已完成',note:'收款 2025/4/17'},
+  {id:75, brand:'J-Lin 品創',         type:'美妝蛋+廣告',           fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-09',status:'已完成',note:'收款 2025/4/9'},
+  {id:76, brand:'森歐黎漾',           type:'洗髮精+養髮液',         fee:14000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-01',status:'已完成',note:'收款 2025/4/1'},
+  {id:77, brand:'MEDITHERAPY',        type:'金絲抗老組合',          fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-25',status:'已完成',note:'收款 2025/3/25'},
+  {id:78, brand:'Skintific 豐光',     type:'TT廣告主90天',          fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-25',status:'已完成',note:'收款 2025/3/25'},
+  {id:79, brand:'十方力',             type:'天作之盒',              fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-18',status:'已完成',note:'收款 2025/3/18'},
+  {id:80, brand:'Skintific 豐光',     type:'小藍霜*1/綠泥棒*1 廣告各一個月', fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-07',status:'已完成',note:'收款 2025/3/7'},
+  {id:81, brand:'ZIIP',               type:'儀器',                  fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-03',status:'已完成',note:'收款 2025/3/3'},
+  {id:82, brand:'Haptiq',             type:'唇膏組',                fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-24',status:'已完成',note:'收款 2025/2/24'},
+  {id:83, brand:'文森先生',           type:'魔境霜',                fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-14',status:'已完成',note:'收款 2025/2/14'},
+  {id:84, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-10',status:'已完成',note:'收款 2025/2/10'},
+  {id:85, brand:'髮本對策',           type:'廣告加購一個月4平台',   fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-05',status:'已完成',note:'收款 2025/2/5'},
+  {id:86, brand:'香港商美美箱',       type:"I'm meme 氣墊+唇釉",   fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-04',status:'已完成',note:'收款 2025/2/4'},
+  {id:87, brand:'十方力',             type:'白美球',                fee:3500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-30',status:'已完成',note:'收款 2025/1/30'},
+  {id:88, brand:'Dr. Cink',           type:'精華露',                fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-30',status:'已完成',note:'收款 2025/1/30'},
+  {id:89, brand:'鹿卡髮品',           type:'洗髮精 潤髮乳 髮油',   fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-24',status:'已完成',note:'收款 2025/1/24'},
+  {id:90, brand:'Dr. May 軒郁國際',   type:'超V精華',               fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-23',status:'已完成',note:'收款 2025/1/23'},
+  {id:91, brand:'Skintific 豐光',     type:'小藍瓶面霜+小綠棒',    fee:4250,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-22',status:'已完成',note:'收款 2025/1/22'},
+  {id:92, brand:'Muzigae Mansion',    type:'唇釉15秒',              fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-13',status:'已完成',note:'收款 2025/1/13'},
+  {id:93, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-10',status:'已完成',note:'收款 2025/1/10'},
+  {id:94, brand:'香港商美美箱',       type:"I'm meme 修容打亮棒 水光唇釉 柔霧唇釉", fee:6000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-02',status:'已完成',note:'收款 2025/1/2'},
+  {id:95, brand:'Bello.U',            type:'肉毒眼霜 補廣告費',     fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2025-12-24',ar:'2025-12-24',status:'已完成',note:'收款 2025/12/24'},
+  {id:96, brand:'蛋殼北北',           type:'洗面乳+廣告1',          fee:7000,  sc:'',sh:'',dr:'',pd:'2025-11-23',py:'2025-12-31',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
+  {id:97, brand:'La Glow 毅達創意',   type:'面膜廣告續約一個月',    fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'2026-01-12',ar:'2026-01-12',status:'已完成',note:'收款 2026/1/12'},
+  {id:98, brand:'雪花秀 AMOREPACIFIC',type:'雪花秀氣墊+廣告',       fee:11000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-30',ar:'2026-01-29',status:'已完成',note:'收款 2026/1/29'},
+  {id:99, brand:'香港商美美箱',       type:'PONY廣告費用',          fee:8000,  sc:'',sh:'',dr:'',pd:'2026-02-02',py:'2026-02-02',ar:'2026-02-02',status:'已完成',note:'收款 2026/2/2'},
+  {id:100,brand:'TimePhoria 豐光',    type:'7000*6支影片 優惠後39000 分兩次 1st', fee:19500, sc:'',sh:'',dr:'',pd:'2026-12-17',py:'2026-03-02',ar:'2026-03-02',status:'已完成',note:'收款 2026/3/2'},
+  {id:101,brand:'香港商美美箱',       type:'車馬費',                fee:4000,  sc:'',sh:'',dr:'',pd:'2026-01-07',py:'2026-03-02',ar:'2026-03-02',status:'已完成',note:'收款 2026/3/2'},
+  {id:102,brand:'Dr. May 軒郁國際',   type:'精華限動發布',          fee:2500,  sc:'',sh:'',dr:'',pd:'2026-04-02',py:'2026-04-02',ar:'2026-04-02',status:'已完成',note:'收款 2026/4/2'},
+  {id:103,brand:'寶拉珍選',           type:'8%果酸',                fee:4000,  sc:'',sh:'',dr:'',pd:'2025-10-07',py:'2025-11-30',ar:'2026-12-15',status:'已完成',note:'收款 2026/12/15'},
+  {id:104,brand:'wonjungyo 陪我玩創意',type:'彩妝帶逛 妝容',        fee:6500,  sc:'',sh:'',dr:'',pd:'2025-11-10',py:'2026-02-25',ar:'2026-02-25',status:'已完成',note:'收款 2026/2/25'},
+  // ── 已完成 2024 ──
+  {id:105,brand:'Heme',               type:'臥蠶筆',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:'收款 2024/6/30'},
+  {id:106,brand:'Ohmo!',              type:'面膜、眼膜',            fee:2500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:'收款 2024/6/30'},
+  {id:107,brand:'Xlash',              type:'睫毛生長液、保濕眼膜',  fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:'收款 2024/6/30'},
+  {id:108,brand:'Wuli Skin',          type:'作臉*3',                fee:6500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-18',status:'已完成',note:'收款 2024/10/18'},
+  {id:109,brand:'Dreame 吹風機',      type:'吹風機',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-23',status:'已完成',note:'收款 2024/10/23'},
+  {id:110,brand:'Ohmo!',              type:'影片買斷費用',          fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-25',status:'已完成',note:'收款 2024/10/25'},
+  {id:111,brand:'髮本對策',           type:'養髮液、洗髮精',        fee:13500, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-01',status:'已完成',note:'收款 2024/11/1'},
+  {id:112,brand:'La Glow 毅達創意',   type:'逆齡組',                fee:7000,  sc:'',sh:'',dr:'',pd:'2024-10-18',py:'',ar:'2024-11-11',status:'已完成',note:'收款 2024/11/11'},
+  {id:113,brand:'克蘭詩',             type:'黃金雙萃',              fee:16500, sc:'',sh:'',dr:'',pd:'2024-10-07',py:'',ar:'2024-11-15',status:'已完成',note:'收款 2024/11/15'},
+  {id:114,brand:'Maybelline',         type:'底膏+睫毛膏*4',         fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-15',status:'已完成',note:'收款 2024/11/15'},
+  {id:115,brand:'文森先生',           type:'氣墊+蜜粉',             fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-20',status:'已完成',note:'收款 2024/11/20'},
+  {id:116,brand:'新肌霓',             type:'淨痘凝露',              fee:9000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-25',status:'已完成',note:'收款 2024/11/25'},
+  {id:117,brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-10',status:'已完成',note:'收款 2024/12/10'},
+  {id:118,brand:'UncleWu',            type:'乾洗髮+買斷',           fee:17000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-24',status:'已完成',note:'收款 2024/12/24'},
+  {id:119,brand:'Love Liner',         type:'眼線液筆',              fee:4000,  sc:'',sh:'',dr:'',pd:'2024-11-07',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
+  {id:120,brand:'kenei',              type:'便秘藥文章',            fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
+  {id:121,brand:'倩碧',               type:'水磁場',                fee:23489, sc:'',sh:'',dr:'',pd:'2024-10-24',py:'',ar:'2024-12-30',status:'已完成',note:'收款 2024/12/30'},
+];
+let nid=100,eid=null,cv='kanban',chs={};
+
+function td(){const d=new Date();d.setHours(0,0,0,0);return d;}
+function daysLeft(s){if(!s)return null;return Math.ceil((new Date(s)-td())/864e5);}
+function fmtM(v){return v?'NT$ '+Number(v).toLocaleString():'—';}
+function getMonth(offset=0){const d=new Date();d.setMonth(d.getMonth()+offset);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+
+function calcIncome(){
+  const thisM=getMonth(0), nextM=getMonth(1);
+  const thisInc=data.filter(e=>{ const d=e.py||e.pd; return d&&d.startsWith(thisM)&&['已完成','預計收款'].includes(e.status); }).reduce((s,e)=>s+(+e.fee||0),0);
+  const nextInc=data.filter(e=>{ const d=e.py||e.pd; return d&&d.startsWith(nextM)&&!['已完成'].includes(e.status); }).reduce((s,e)=>s+(+e.fee||0),0);
+  const unpaid=data.filter(e=>e.status==='預計收款').reduce((s,e)=>s+(+e.fee||0),0);
+  const total=data.filter(e=>e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
+  return{thisInc,nextInc,unpaid,total};
+}
+
+function sv(v){
+  cv=v;
+  document.querySelectorAll('.view').forEach(e=>e.classList.remove('on'));
+  document.getElementById('view-'+v).classList.add('on');
+  document.querySelectorAll('.nb').forEach(e=>e.classList.remove('on'));
+  const m={kanban:'總覽',table:'清單',charts:'圖表',tracker:'追蹤'};
+  document.querySelectorAll('.nb').forEach(e=>{if(e.textContent.trim().includes(m[v]))e.classList.add('on');});
+  if(v==='charts')setTimeout(rCharts,50);
+  if(v==='tracker')rTracker();
+}
+
+/* 總覽頂部：總合作數、進行中、待發文、待收款 */
+function rStatsKanban(){
+  const total=data.length;
+  const done=data.filter(e=>e.status==='已完成').length;
+  const wip=data.filter(e=>['腳本撰寫','待拍攝','待剪輯','校稿中'].includes(e.status)).length;
+  const pendPub=data.filter(e=>e.status==='待發布').length;
+  const pendPay=data.filter(e=>e.status==='預計收款').length;
+  document.getElementById('stats-kanban').innerHTML=
+    `<div class="sc"><div class="sl">總合作數</div><div class="sv">${total}</div></div>`+
+    `<div class="sc"><div class="sl">已完成</div><div class="sv" style="color:#3D7875">${done}</div></div>`+
+    `<div class="sc"><div class="sl">進行中</div><div class="sv" style="color:#0ABAB5">${wip}</div></div>`+
+    `<div class="sc"><div class="sl">待發文</div><div class="sv" style="color:#B8960A">${pendPub}</div></div>`+
+    `<div class="sc"><div class="sl">待收款</div><div class="sv" style="color:#C84040">${pendPay}</div></div>`;
+}
+
+/* 清單頂部：5個收入統計 */
+function rStatsTable(){
+  const{thisInc,nextInc,unpaid,total}=calcIncome();
+  const allCount=data.length;
+  document.getElementById('stats-table').innerHTML=
+    `<div class="sc"><div class="sl">總合作數</div><div class="sv">${allCount}</div><div class="ss">所有案子</div></div>`+
+    `<div class="sc"><div class="sl">本月預計收入</div><div class="sv" style="color:#0ABAB5">$${(thisInc/1000).toFixed(0)}K</div><div class="ss">NT$ ${thisInc.toLocaleString()}</div></div>`+
+    `<div class="sc"><div class="sl">下月預計收入</div><div class="sv" style="color:#7ED8D5">$${(nextInc/1000).toFixed(0)}K</div><div class="ss">NT$ ${nextInc.toLocaleString()}</div></div>`+
+    `<div class="sc"><div class="sl">未撥款</div><div class="sv" style="color:#C84040">$${(unpaid/1000).toFixed(0)}K</div><div class="ss">NT$ ${unpaid.toLocaleString()}</div></div>`+
+    `<div class="sc"><div class="sl">累計收入</div><div class="sv" style="color:#5A9E99">$${(total/1000).toFixed(0)}K</div><div class="ss">NT$ ${total.toLocaleString()}</div></div>`;
+}
+
+function rUpcoming(){
+  const items=[];
+  data.filter(e=>e.status!=='已完成').forEach(e=>{
+    SCAN_DL.forEach(dl=>{
+      if(!dl.statuses.includes(e.status))return;
+      const days=daysLeft(e[dl.key]);
+      if(days!==null&&days>=0&&days<=10)items.push({brand:e.brand,type:e.type,label:dl.label,date:e[dl.key],days,status:e.status});
+    });
+  });
+  items.sort((a,b)=>a.days-b.days);
+  const el=document.getElementById('upcoming');
+  const rows=items.map(i=>{
+    const lc=i.days<=2?'#DEC0B8':i.days<=5?'#D4C8A8':'#A8D0CE';
+    const dl=i.days===0?'今天到期':i.days===1?'明天到期':`剩 ${i.days} 天`;
+    return`<div class="up-item">
+      <div class="up-left">
+        <div class="up-line" style="background:${lc}"></div>
+        <div class="up-info">
+          <div class="up-brand">${i.brand}</div>
+          <div class="up-detail">${i.type} · ${i.label} · ${i.date}</div>
+        </div>
+      </div>
+      <div class="up-right">
+        <span class="up-stage" style="background:${SC[i.status]?.d}18;color:${SC[i.status]?.d}">${i.status}</span>
+        <span class="up-days">${dl}</span>
+      </div>
+    </div>`;
+  }).join('');
+  el.innerHTML=`<div class="upcoming-title">即將到期 · 10天內</div>`+
+    (items.length?rows:`<div class="up-empty">近10天內沒有到期任務 🎉</div>`);
+}
+
+function rKanban(){
+  document.getElementById('board').innerHTML=KANBAN_ST.map(s=>{
+    const cards=data.filter(e=>e.status===s);
+    const dl=DL_MAP[s];
+    return`<div class="kcol">
+      <div class="kct"><span class="kdot" style="background:${SC[s].d}"></span>${s}<span class="kn">${cards.length}</span></div>`+
+      (cards.length?cards.map(e=>{
+        const dk=dl?e[dl.key]:null;
+        const days=daysLeft(dk);
+        const warn=days!==null&&days<=5&&days>=0;
+        const over=days!==null&&days<0;
+        return`<div class="kcard" onclick="editE(${e.id})">
+          <div class="kb">${e.brand}</div>
+          <div class="kt">${e.type||'—'}</div>
+          <div class="km"><span class="kf">${e.fee?'NT$'+Number(e.fee).toLocaleString():'—'}</span><span class="kd">${dk||''}</span></div>
+          ${over?`<div class="kw err">⚠ ${dl.label}已逾期</div>`:warn?`<div class="kw">· ${dl.label}剩 ${days} 天</div>`:''}
+        </div>`;
+      }).join(''):`<div class="ke">—</div>`)+`</div>`;
+  }).join('');
+}
+
+let sortKey='', sortDir=1;
+function sortTable(key){
+  if(sortKey===key) sortDir*=-1;
+  else { sortKey=key; sortDir=1; }
+  // Update sort indicators
+  document.querySelectorAll('[id^="sort-"]').forEach(el=>el.textContent='');
+  const el=document.getElementById('sort-'+key);
+  if(el) el.textContent=sortDir===1?' ↑':' ↓';
+  rTable();
+}
+
+function rTable(){
+  const d=v=>v||'<span style="color:#C8ECEB">—</span>';
+  let rows=[...data];
+  if(sortKey){
+    rows.sort((a,b)=>{
+      let av=a[sortKey]||'', bv=b[sortKey]||'';
+      if(sortKey==='fee'){av=Number(a.fee)||0; bv=Number(b.fee)||0; return (av-bv)*sortDir;}
+      return av.localeCompare(bv, 'zh-TW')*sortDir;
+    });
+  }
+  document.getElementById('tbody').innerHTML=rows.map(e=>
+    `<tr><td class="tbr">${e.brand}</td><td class="td-type" title="${e.type||''}">${e.type||'—'}</td>
+    <td class="tfe">${fmtM(e.fee)}</td>
+    <td class="tda">${d(e.sc)}</td><td class="tda">${d(e.sh)}</td>
+    <td class="tda">${d(e.dr)}</td><td class="tda">${d(e.pd)}</td><td class="tda">${d(e.py)}</td>
+    <td class="tda">${d(e.ar)}</td>
+    <td><span class="badge ${SC[e.status]?.b||'b-done'}">${e.status}</span></td>
+    <td style="color:#5A9E99;font-size:13px;max-width:130px;overflow:hidden;text-overflow:ellipsis">${e.note||'—'}</td>
+    <td style="display:flex;gap:4px">
+      <button class="ib" onclick="editE(${e.id})">✏</button>
+      <button class="ib" onclick="delE(${e.id})" style="color:#C84040;border-color:#FDE8E6">✕</button>
+    </td></tr>`
+  ).join('');
+}
+
+/* 圖表：收入摘要卡 + 4張圖 */
+function rIncomeCards(){
+  const{thisInc,nextInc,unpaid,total}=calcIncome();
+  document.getElementById('income-cards').innerHTML=
+    `<div class="ic"><div class="il">本月預計收入</div><div class="iv" style="color:#0ABAB5">$${(thisInc/1000).toFixed(0)}K</div><div class="is">NT$ ${thisInc.toLocaleString()}</div></div>`+
+    `<div class="ic"><div class="il">下月預計收入</div><div class="iv" style="color:#7ED8D5">$${(nextInc/1000).toFixed(0)}K</div><div class="is">NT$ ${nextInc.toLocaleString()}</div></div>`+
+    `<div class="ic"><div class="il">未撥款</div><div class="iv" style="color:#C84040">$${(unpaid/1000).toFixed(0)}K</div><div class="is">NT$ ${unpaid.toLocaleString()}</div></div>`+
+    `<div class="ic"><div class="il">累計收入</div><div class="iv" style="color:#5A9E99">$${(total/1000).toFixed(0)}K</div><div class="is">NT$ ${total.toLocaleString()}</div></div>`;
+}
+
+function dc(id){if(chs[id]){chs[id].destroy();delete chs[id];}}
+function rCharts(){
+  const mo={},moCnt={};
+  data.forEach(e=>{if(e.ar&&e.fee){const m=e.ar.slice(0,7);mo[m]=(mo[m]||0)+Number(e.fee);moCnt[m]=(moCnt[m]||0)+1;}});
+  const ms=Object.keys(mo).sort();
+  dc('cm');chs['cm']=new Chart(document.getElementById('cm'),{type:'bar',data:{labels:ms.map(m=>m.replace('-','/')),datasets:[{data:ms.map(m=>mo[m]),backgroundColor:'#0ABAB5',borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+(v/1000)+'K'},grid:{color:'#EEF8F7'}},x:{grid:{display:false}}}}});
+  const br={};data.forEach(e=>{if(e.fee)br[e.brand]=(br[e.brand]||0)+Number(e.fee);});
+  const brs=Object.entries(br).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  dc('cb');chs['cb']=new Chart(document.getElementById('cb'),{type:'bar',data:{labels:brs.map(b=>b[0]),datasets:[{data:brs.map(b=>b[1]),backgroundColor:PAL,borderRadius:5}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>'$'+(v/1000)+'K'},grid:{color:'#EEF8F7'}},y:{grid:{display:false}}}}});
+  const stc={};data.forEach(e=>{stc[e.status]=(stc[e.status]||0)+1;});
+  dc('cs');chs['cs']=new Chart(document.getElementById('cs'),{type:'doughnut',data:{labels:Object.keys(stc),datasets:[{data:Object.values(stc),backgroundColor:PAL,borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12,boxWidth:10}}}}});
+  dc('ca');chs['ca']=new Chart(document.getElementById('ca'),{type:'line',data:{labels:ms.map(m=>m.replace('-','/')),datasets:[{data:ms.map(m=>Math.round(mo[m]/moCnt[m])),borderColor:'#0ABAB5',backgroundColor:'rgba(10,186,181,.08)',borderWidth:2,pointBackgroundColor:'#0ABAB5',pointRadius:4,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+(v/1000).toFixed(1)+'K'},grid:{color:'#EEF8F7'}},x:{grid:{display:false}}}}});
+  // 本月 vs 下月
+  const{thisInc,nextInc,unpaid,total}=calcIncome();
+  dc('cmonth');chs['cmonth']=new Chart(document.getElementById('cmonth'),{type:'bar',data:{labels:['本月預計收入','下月預計收入'],datasets:[{data:[thisInc,nextInc],backgroundColor:['#0ABAB5','#7ED8D5'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+(v/1000)+'K'},grid:{color:'#EEF8F7'}},x:{grid:{display:false}}}}});
+  // 未撥款 vs 累計收入
+  dc('cpay');chs['cpay']=new Chart(document.getElementById('cpay'),{type:'doughnut',data:{labels:['未撥款','已收累計'],datasets:[{data:[unpaid,total],backgroundColor:['#C84040','#0ABAB5'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:14,boxWidth:10}}}}});
+}
+
+/* 追蹤：頂部每狀態數量 + 未完成清單 */
+function rTracker(){
+  // 頂部小統計
+  document.getElementById('tracker-stats').innerHTML=KANBAN_ST.map(s=>{
+    const cnt=data.filter(e=>e.status===s).length;
+    return`<div class="tsc">
+      <span class="tsc-dot" style="background:${SC[s].d}"></span>
+      <div class="tsc-info"><div class="tsc-label">${s}</div><div class="tsc-val">${cnt}</div></div>
+    </div>`;
+  }).join('');
+
+  // 未完成追蹤清單
+  const sections=[
+    {status:'腳本撰寫',dateKey:'sc',dateLabel:'腳本日'},
+    {status:'待拍攝',dateKey:'sh',dateLabel:'拍攝日'},
+    {status:'待剪輯',dateKey:'dr',dateLabel:'交稿日'},
+    {status:'校稿中',dateKey:'dr',dateLabel:'交稿日'},
+    {status:'待發布',dateKey:'pd',dateLabel:'發文日'},
+    {status:'預計收款',dateKey:'py',dateLabel:'撥款日'},
+  ];
+  document.getElementById('tracker').innerHTML=sections.map(sec=>{
+    const items=data.filter(e=>e.status===sec.status);
+    const rows=items.map(e=>{
+      const days=daysLeft(e[sec.dateKey]);
+      const cls=days===null?'ok':days<0?'urgent':days<=5?'warn':'ok';
+      const dl=days===null?'—':days<0?`逾期${Math.abs(days)}天`:days===0?'今天':days===1?'明天':`${days}天後`;
+      return`<div class="tritem">
+        <div style="flex:1;min-width:0"><div class="tr-brand">${e.brand}</div><div class="tr-type">${e.type||'—'}</div></div>
+        <div class="tr-date">${e[sec.dateKey]||'—'}</div>
+        <div class="tr-days ${cls}">${dl}</div>
+        <div class="tr-fee">${fmtM(e.fee)}</div>
+      </div>`;
+    }).join('');
+    return`<div class="trsec">
+      <div class="trsec-hd">
+        <span class="trsec-dot" style="background:${SC[sec.status].d}"></span>
+        <span class="trsec-title">${sec.status}</span>
+        <span class="trsec-count">${items.length} 件</span>
+      </div>
+      ${items.length?rows:`<div class="tr-empty">目前沒有案子 ✓</div>`}
+    </div>`;
+  }).join('');
+}
+
+function openM(){
+  eid=null;
+  document.getElementById('mtitle').textContent='新增品牌合作';
+  ['fb','ftype','ffee','fsc','fsh','fdr','fpd','fpy','far','fnote'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fst').value='腳本撰寫';
+  document.getElementById('modal').classList.add('on');
+}
+function editE(id){
+  const e=data.find(x=>x.id===id);if(!e)return;
+  eid=id;
+  document.getElementById('mtitle').textContent='編輯合作';
+  document.getElementById('fb').value=e.brand;
+  document.getElementById('ftype').value=e.type;
+  document.getElementById('ffee').value=e.fee;
+  document.getElementById('fsc').value=e.sc||'';
+  document.getElementById('fsh').value=e.sh||'';
+  document.getElementById('fdr').value=e.dr||'';
+  document.getElementById('fpd').value=e.pd||'';
+  document.getElementById('fpy').value=e.py||'';
+  document.getElementById('far').value=e.ar||'';
+  document.getElementById('fst').value=e.status;
+  document.getElementById('fnote').value=e.note||'';
+  document.getElementById('modal').classList.add('on');
+}
+function closeM(ev){if(!ev||ev.target===document.getElementById('modal'))document.getElementById('modal').classList.remove('on');}
+function saveE(){
+  const d={brand:document.getElementById('fb').value.trim()||'未命名',type:document.getElementById('ftype').value.trim(),fee:document.getElementById('ffee').value,sc:document.getElementById('fsc').value,sh:document.getElementById('fsh').value,dr:document.getElementById('fdr').value,pd:document.getElementById('fpd').value,py:document.getElementById('fpy').value,ar:document.getElementById('far').value,status:document.getElementById('fst').value,note:document.getElementById('fnote').value.trim()};
+  if(eid){const i=data.findIndex(e=>e.id===eid);data[i]={...data[i],...d};}
+  else data.unshift({id:nid++,...d});
+  document.getElementById('modal').classList.remove('on');
+  rAll();
+}
+function delE(id){if(!confirm('確定刪除？'))return;data=data.filter(e=>e.id!==id);rAll();}
+function rAll(){rStatsKanban();rStatsTable();rUpcoming();rKanban();rTable();if(cv==='charts')rCharts();if(cv==='tracker')rTracker();}
+rAll();
+</script>
+</body>
+</html>
