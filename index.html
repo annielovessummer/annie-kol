@@ -167,6 +167,20 @@ td{padding:10px 12px;font-size:13px;vertical-align:middle;white-space:nowrap}
   </nav>
 </header>
 
+<!-- Loading overlay -->
+<div id="loading" style="display:none;position:fixed;inset:0;background:rgba(245,250,250,.9);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+  <div style="width:32px;height:32px;border:3px solid #D4F0EE;border-top-color:#0ABAB5;border-radius:50%;animation:spin 0.8s linear infinite"></div>
+  <div style="font-size:13px;color:#5A9E99">載入資料中...</div>
+</div>
+
+<!-- Saving indicator -->
+<div id="saving" style="display:none;position:fixed;bottom:20px;right:20px;background:#2D2D2D;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;z-index:998;align-items:center;gap:8px">
+  <div style="width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#0ABAB5;border-radius:50%;animation:spin 0.8s linear infinite"></div>
+  同步中...
+</div>
+
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
 <main class="main">
   <!-- 總覽 -->
   <div class="view on" id="view-kanban">
@@ -278,7 +292,7 @@ const SCAN_DL=[
   {key:'py',label:'撥款',statuses:['預計收款']},
 ];
 
-let data=[
+const BUILTIN_DATA=[
   // ── 等待匯款 ──
   {id:1,  brand:'Numbuzin',           type:'五支影片 1號系列/數字面膜/Fwee唇釉/Fwee妝前/No9精華（美金付款）', fee:37834, sc:'',sh:'',dr:'',pd:'',py:'2026-05-30',ar:'',status:'預計收款',note:'6000*5 完成後匯款'},
   {id:2,  brand:'十方力',             type:'六篇Reels MM*4 白美球*2',                                        fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-07',ar:'',status:'預計收款',note:'產品費用待確認'},
@@ -403,8 +417,63 @@ let data=[
   {id:119,brand:'Love Liner',         type:'眼線液筆',              fee:4000,  sc:'',sh:'',dr:'',pd:'2024-11-07',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
   {id:120,brand:'kenei',              type:'便秘藥文章',            fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
   {id:121,brand:'倩碧',               type:'水磁場',                fee:23489, sc:'',sh:'',dr:'',pd:'2024-10-24',py:'',ar:'2024-12-30',status:'已完成',note:'收款 2024/12/30'},
-];
-let nid=100,eid=null,cv='kanban',chs={};
+];;
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDcI_T8iFjB5jysknXLgm-6H2lsp4l_n8ANxhnnrnP34ZXlv3EBUb9jv82xonRU8gOZQ/exec';
+let data=[];
+let nid=200,eid=null,cv='kanban',chs={};
+let isSaving=false;
+
+async function loadData(){
+  document.getElementById('loading').style.display='flex';
+  try {
+    const res = await fetch(SCRIPT_URL);
+    const json = await res.json();
+    if(json.status==='ok' && json.data.length>0){
+      data = json.data.map(e=>({
+        ...e,
+        id: Number(e.id)||0,
+        fee: Number(e.fee)||0,
+      }));
+      nid = Math.max(...data.map(e=>e.id)) + 1;
+    } else {
+      // 第一次：寫入所有現有資料
+      await initData();
+    }
+  } catch(err) {
+    console.error('載入失敗', err);
+    // 離線模式用內建資料
+    data = BUILTIN_DATA;
+    nid = Math.max(...data.map(e=>e.id)) + 1;
+  }
+  document.getElementById('loading').style.display='none';
+  rAll();
+}
+
+async function initData(){
+  await fetch(SCRIPT_URL, {
+    method:'POST',
+    body: JSON.stringify({action:'init'})
+  });
+  await saveData(BUILTIN_DATA);
+  data = BUILTIN_DATA;
+  nid = Math.max(...data.map(e=>e.id)) + 1;
+}
+
+async function saveData(d){
+  if(isSaving) return;
+  isSaving = true;
+  document.getElementById('saving').style.display='flex';
+  try {
+    await fetch(SCRIPT_URL, {
+      method:'POST',
+      body: JSON.stringify({action:'save', data: d||data})
+    });
+  } catch(err){ console.error('儲存失敗', err); }
+  isSaving = false;
+  document.getElementById('saving').style.display='none';
+}
+
 
 function td(){const d=new Date();d.setHours(0,0,0,0);return d;}
 function daysLeft(s){if(!s)return null;return Math.ceil((new Date(s)-td())/864e5);}
@@ -651,10 +720,12 @@ function saveE(){
   else data.unshift({id:nid++,...d});
   document.getElementById('modal').classList.remove('on');
   rAll();
+  saveData();
 }
-function delE(id){if(!confirm('確定刪除？'))return;data=data.filter(e=>e.id!==id);rAll();}
+function delE(id){if(!confirm('確定刪除？'))return;data=data.filter(e=>e.id!==id);rAll();saveData();}
 function rAll(){rStatsKanban();rStatsTable();rUpcoming();rKanban();rTable();if(cv==='charts')rCharts();if(cv==='tracker')rTracker();}
-rAll();
+// 啟動時載入資料
+loadData();
 </script>
 </body>
 </html>
