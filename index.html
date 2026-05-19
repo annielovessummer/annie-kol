@@ -427,23 +427,23 @@ let isSaving=false;
 async function loadData(){
   document.getElementById('loading').style.display='flex';
   try {
-    const res = await fetch(SCRIPT_URL);
+    const res = await fetch(SCRIPT_URL + '?t=' + Date.now());
     const json = await res.json();
-    if(json.status==='ok' && json.data.length>0){
+    if(json.status==='ok' && json.data && json.data.length>0){
       data = json.data.map(e=>({
         ...e,
         id: Number(e.id)||0,
         fee: Number(e.fee)||0,
-      }));
+      })).filter(e=>e.id>0);
       nid = Math.max(...data.map(e=>e.id)) + 1;
     } else {
-      // 第一次：寫入所有現有資料
-      await initData();
+      data = BUILTIN_DATA.map(e=>({...e}));
+      nid = Math.max(...data.map(e=>e.id)) + 1;
+      saveData(data);
     }
   } catch(err) {
     console.error('載入失敗', err);
-    // 離線模式用內建資料
-    data = BUILTIN_DATA;
+    data = BUILTIN_DATA.map(e=>({...e}));
     nid = Math.max(...data.map(e=>e.id)) + 1;
   }
   document.getElementById('loading').style.display='none';
@@ -465,9 +465,12 @@ async function saveData(d){
   isSaving = true;
   document.getElementById('saving').style.display='flex';
   try {
+    const payload = JSON.stringify({action:'save', data: d||data});
     await fetch(SCRIPT_URL, {
       method:'POST',
-      body: JSON.stringify({action:'save', data: d||data})
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body: payload
     });
   } catch(err){ console.error('儲存失敗', err); }
   isSaving = false;
