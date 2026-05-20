@@ -434,6 +434,12 @@ async function loadData(){
         ...e,
         id: Number(e.id)||0,
         fee: Number(e.fee)||0,
+        sc: fmtDate(e.sc),
+        sh: fmtDate(e.sh),
+        dr: fmtDate(e.dr),
+        pd: fmtDate(e.pd),
+        py: fmtDate(e.py),
+        ar: fmtDate(e.ar),
       })).filter(e=>e.id>0);
       nid = Math.max(...data.map(e=>e.id)) + 1;
     } else {
@@ -478,6 +484,15 @@ async function saveData(d){
 }
 
 
+function fmtDate(v){
+  if(!v||v==='') return '';
+  if(/^\d{4}-\d{2}-\d{2}$/.test(String(v))) return String(v);
+  const d = new Date(v);
+  if(!isNaN(d.getTime())){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  return String(v);
+}
 function td(){const d=new Date();d.setHours(0,0,0,0);return d;}
 function daysLeft(s){if(!s)return null;return Math.ceil((new Date(s)-td())/864e5);}
 function fmtM(v){return v?'NT$ '+Number(v).toLocaleString():'—';}
