@@ -243,7 +243,7 @@ td{padding:10px 12px;font-size:13px;vertical-align:middle;white-space:nowrap}
       <div class="fr"><label>狀態</label>
         <select id="fst">
           <option>腳本撰寫</option><option>待拍攝</option><option>待剪輯</option>
-          <option>校稿中</option><option>待發布</option><option>預計收款</option><option>已完成</option>
+          <option>校稿中</option><option>待發布</option><option>待收款</option><option>已完成</option>
         </select>
       </div>
       <div class="fsec">時間軸</div>
@@ -264,14 +264,14 @@ td{padding:10px 12px;font-size:13px;vertical-align:middle;white-space:nowrap}
 </div>
 
 <script>
-const KANBAN_ST=['腳本撰寫','待拍攝','待剪輯','校稿中','待發布','預計收款'];
+const KANBAN_ST=['腳本撰寫','待拍攝','待剪輯','校稿中','待發布','待收款'];
 const SC={
   '腳本撰寫':{b:'b-script',d:'#2471A3'},
   '待拍攝':  {b:'b-shoot', d:'#C8783A'},
   '待剪輯':  {b:'b-edit',  d:'#7D4FC0'},
   '校稿中':  {b:'b-review',d:'#B03090'},
   '待發布':  {b:'b-pub',   d:'#C9A800'},  /* 橘色 */
-  '預計收款':{b:'b-pay',   d:'#C84040'},
+  '待收款':{b:'b-pay',   d:'#C84040'},
   '已完成':  {b:'b-done',  d:'#3D7875'},
 };
 const PAL=['#0ABAB5','#2471A3','#C8783A','#7D4FC0','#B03090','#C9A800','#C84040'];
@@ -282,29 +282,29 @@ const DL_MAP={
   '待剪輯':  {key:'dr',label:'交稿'},
   '校稿中':  {key:'dr',label:'交稿'},
   '待發布':  {key:'pd',label:'發文'},
-  '預計收款':{key:'py',label:'撥款'},
+  '待收款':{key:'py',label:'撥款'},
 };
 const SCAN_DL=[
   {key:'sc',label:'腳本',statuses:['腳本撰寫']},
   {key:'sh',label:'拍攝',statuses:['待拍攝']},
   {key:'dr',label:'交稿',statuses:['待剪輯','校稿中']},
   {key:'pd',label:'發文',statuses:['待發布']},
-  {key:'py',label:'撥款',statuses:['預計收款']},
+  {key:'py',label:'撥款',statuses:['待收款']},
 ];
 
 const BUILTIN_DATA=[
   // ── 等待匯款 ──
-  {id:1,  brand:'Numbuzin',           type:'五支影片 1號系列/數字面膜/Fwee唇釉/Fwee妝前/No9精華（美金付款）', fee:37834, sc:'',sh:'',dr:'',pd:'',py:'2026-05-30',ar:'',status:'預計收款',note:'6000*5 完成後匯款'},
-  {id:2,  brand:'十方力',             type:'六篇Reels MM*4 白美球*2',                                        fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-07',ar:'',status:'預計收款',note:'產品費用待確認'},
-  {id:3,  brand:'雪花秀 AMOREPACIFIC',type:'2個月影片授權 $3000*2個月',                                      fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'2026-02-28',ar:'',status:'預計收款',note:''},
-  {id:4,  brand:'Dr.WU',              type:'玻尿酸系列',                                                    fee:6000,  sc:'',sh:'',dr:'',pd:'2026-01-04',py:'2026-03-10',ar:'',status:'預計收款',note:''},
-  {id:5,  brand:'Ozio',               type:'卵殼膜系列+廣告主授權1個月+素材授權三個月',                       fee:13000, sc:'',sh:'',dr:'',pd:'2026-02-12',py:'2026-05-25',ar:'',status:'預計收款',note:''},
-  {id:6,  brand:'菲那絲',             type:'洗髮精系列',                                                    fee:8000,  sc:'',sh:'',dr:'',pd:'2026-04-09',py:'2026-05-30',ar:'',status:'預計收款',note:''},
-  {id:7,  brand:'Dr.WU',              type:'超逆齡肌因再生精華',                                            fee:6000,  sc:'',sh:'',dr:'',pd:'2026-04-11',py:'2026-06-11',ar:'',status:'預計收款',note:''},
-  {id:8,  brand:'Kamee',              type:'客製化保健品',                                                  fee:9000,  sc:'',sh:'',dr:'',pd:'2026-04-17',py:'2026-06-16',ar:'',status:'預計收款',note:''},
-  {id:9,  brand:'OLAY IPG DXTRA',     type:'水光小白瓶',                                                   fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-08',py:'2026-07-08',ar:'',status:'預計收款',note:''},
-  {id:10, brand:'Dr. May 軒郁國際',   type:'紫色防曬',                                                     fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-12',py:'2026-06-10',ar:'',status:'預計收款',note:''},
-  {id:11, brand:'TimePhoria 豐光',    type:'7000*6支影片 優惠後39000 分兩次 2nd',                          fee:19500, sc:'',sh:'',dr:'',pd:'2026-06-15',py:'',ar:'',status:'預計收款',note:''},
+  {id:1,  brand:'Numbuzin',           type:'五支影片 1號系列/數字面膜/Fwee唇釉/Fwee妝前/No9精華（美金付款）', fee:37834, sc:'',sh:'',dr:'',pd:'',py:'2026-05-30',ar:'',status:'待收款',note:'6000*5 完成後匯款'},
+  {id:2,  brand:'十方力',             type:'六篇Reels MM*4 白美球*2',                                        fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-07',ar:'',status:'待收款',note:'產品費用待確認'},
+  {id:3,  brand:'雪花秀 AMOREPACIFIC',type:'2個月影片授權 $3000*2個月',                                      fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'2026-02-28',ar:'',status:'待收款',note:''},
+  {id:4,  brand:'Dr.WU',              type:'玻尿酸系列',                                                    fee:6000,  sc:'',sh:'',dr:'',pd:'2026-01-04',py:'2026-03-10',ar:'',status:'待收款',note:''},
+  {id:5,  brand:'Ozio',               type:'卵殼膜系列+廣告主授權1個月+素材授權三個月',                       fee:13000, sc:'',sh:'',dr:'',pd:'2026-02-12',py:'2026-05-25',ar:'',status:'待收款',note:''},
+  {id:6,  brand:'菲那絲',             type:'洗髮精系列',                                                    fee:8000,  sc:'',sh:'',dr:'',pd:'2026-04-09',py:'2026-05-30',ar:'',status:'待收款',note:''},
+  {id:7,  brand:'Dr.WU',              type:'超逆齡肌因再生精華',                                            fee:6000,  sc:'',sh:'',dr:'',pd:'2026-04-11',py:'2026-06-11',ar:'',status:'待收款',note:''},
+  {id:8,  brand:'Kamee',              type:'客製化保健品',                                                  fee:9000,  sc:'',sh:'',dr:'',pd:'2026-04-17',py:'2026-06-16',ar:'',status:'待收款',note:''},
+  {id:9,  brand:'OLAY IPG DXTRA',     type:'水光小白瓶',                                                   fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-08',py:'2026-07-08',ar:'',status:'待收款',note:''},
+  {id:10, brand:'Dr. May 軒郁國際',   type:'紫色防曬',                                                     fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-12',py:'2026-06-10',ar:'',status:'待收款',note:''},
+  {id:11, brand:'TimePhoria 豐光',    type:'7000*6支影片 優惠後39000 分兩次 2nd',                          fee:19500, sc:'',sh:'',dr:'',pd:'2026-06-15',py:'',ar:'',status:'待收款',note:''},
   // ── 已完成 2026 ──
   {id:12, brand:'La Glow 毅達創意',   type:'雪凝乳',                fee:8000,  sc:'',sh:'',dr:'',pd:'2026-01-23',py:'2026-02-10',ar:'2026-02-10',status:'已完成',note:'收款 2026/2/10'},
   {id:13, brand:'OLAY IPG DXTRA',     type:'限動+廣告一週',         fee:2000,  sc:'',sh:'',dr:'',pd:'2025-11-05',py:'2026-01-26',ar:'2026-01-26',status:'已完成',note:'收款 2026/1/26'},
@@ -417,43 +417,81 @@ const BUILTIN_DATA=[
   {id:119,brand:'Love Liner',         type:'眼線液筆',              fee:4000,  sc:'',sh:'',dr:'',pd:'2024-11-07',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
   {id:120,brand:'kenei',              type:'便秘藥文章',            fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
   {id:121,brand:'倩碧',               type:'水磁場',                fee:23489, sc:'',sh:'',dr:'',pd:'2024-10-24',py:'',ar:'2024-12-30',status:'已完成',note:'收款 2024/12/30'},
+  {id:122,brand:'美力時尚',           type:'影片買斷費用',           fee:15000, sc:'',sh:'',dr:'',pd:'2026-05-07',py:'2026-06-07',ar:'',status:'待收款',note:''},
+  {id:123,brand:'OLAY',               type:'IG+FB Reels & Story廣告 6/10-6/18 9天', fee:1000, sc:'',sh:'',dr:'',pd:'2026-06-10',py:'2026-08-10',ar:'',status:'待收款',note:''},
+  {id:124,brand:'OLAY',               type:'IG+FB Reels & Story廣告 5/15-5/31 17天', fee:2000, sc:'',sh:'',dr:'',pd:'2026-05-15',py:'2026-07-15',ar:'',status:'待收款',note:''},
+  {id:125,brand:'Solone',             type:'生粉撲系列',             fee:6000,  sc:'',sh:'',dr:'',pd:'2026-05-15',py:'2026-06-15',ar:'',status:'待收款',note:''},
+  {id:126,brand:'未來美 軒郁國際',    type:'618活動檔期+廣告',       fee:8000,  sc:'',sh:'',dr:'',pd:'2026-06-08',py:'2026-07-08',ar:'',status:'待收款',note:''},
+  {id:127,brand:'BIOHEAL BOH',        type:'噴霧+乳霜',             fee:6000,  sc:'',sh:'',dr:'',pd:'2026-05-28',py:'2026-06-28',ar:'',status:'待收款',note:''},
 ];;
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDcI_T8iFjB5jysknXLgm-6H2lsp4l_n8ANxhnnrnP34ZXlv3EBUb9jv82xonRU8gOZQ/exec';
 let data=[];
-let nid=200,eid=null,cv='kanban',chs={};
+let nid=128,eid=null,cv='kanban',chs={};
 let isSaving=false;
 
-async function loadData(){
+function loadData(){
   document.getElementById('loading').style.display='flex';
-  try {
-    const res = await fetch(SCRIPT_URL + '?t=' + Date.now());
-    const json = await res.json();
-    if(json.status==='ok' && json.data && json.data.length>0){
-      data = json.data.map(e=>({
-        ...e,
-        id: Number(e.id)||0,
-        fee: Number(e.fee)||0,
-        sc: fmtDate(e.sc),
-        sh: fmtDate(e.sh),
-        dr: fmtDate(e.dr),
-        pd: fmtDate(e.pd),
-        py: fmtDate(e.py),
-        ar: fmtDate(e.ar),
-      })).filter(e=>e.id>0);
-      nid = Math.max(...data.map(e=>e.id)) + 1;
-    } else {
+  
+  // Use JSONP to avoid CORS
+  window._sheetCallback = function(json) {
+    try {
+      if(json.status==='ok' && json.data && json.data.length>0){
+        data = json.data.map(e=>({
+          ...e,
+          id: Number(e.id)||0,
+          fee: Number(e.fee)||0,
+          sc: fmtDate(e.sc),
+          sh: fmtDate(e.sh),
+          dr: fmtDate(e.dr),
+          pd: fmtDate(e.pd),
+          py: fmtDate(e.py),
+          ar: fmtDate(e.ar),
+        })).filter(e=>e.id>0);
+        nid = Math.max(...data.map(e=>e.id)) + 1;
+      } else {
+        data = BUILTIN_DATA.map(e=>({...e}));
+        nid = Math.max(...data.map(e=>e.id)) + 1;
+        saveData(data);
+      }
+    } catch(err) {
+      console.error('資料處理失敗', err);
       data = BUILTIN_DATA.map(e=>({...e}));
       nid = Math.max(...data.map(e=>e.id)) + 1;
-      saveData(data);
     }
-  } catch(err) {
-    console.error('載入失敗', err);
+    document.getElementById('loading').style.display='none';
+    // Remove script tag
+    const s = document.getElementById('jsonp-script');
+    if(s) s.remove();
+    rAll();
+  };
+
+  // Timeout fallback
+  const timer = setTimeout(function(){
+    console.warn('載入逾時，使用內建資料');
     data = BUILTIN_DATA.map(e=>({...e}));
     nid = Math.max(...data.map(e=>e.id)) + 1;
-  }
-  document.getElementById('loading').style.display='none';
-  rAll();
+    document.getElementById('loading').style.display='none';
+    rAll();
+  }, 8000);
+
+  window._sheetCallbackWithTimer = function(json) {
+    clearTimeout(timer);
+    window._sheetCallback(json);
+  };
+
+  const script = document.createElement('script');
+  script.id = 'jsonp-script';
+  script.src = SCRIPT_URL + '?callback=_sheetCallbackWithTimer&t=' + Date.now();
+  script.onerror = function() {
+    clearTimeout(timer);
+    console.error('載入失敗，使用內建資料');
+    data = BUILTIN_DATA.map(e=>({...e}));
+    nid = Math.max(...data.map(e=>e.id)) + 1;
+    document.getElementById('loading').style.display='none';
+    rAll();
+  };
+  document.head.appendChild(script);
 }
 
 async function initData(){
@@ -500,9 +538,9 @@ function getMonth(offset=0){const d=new Date();d.setMonth(d.getMonth()+offset);r
 
 function calcIncome(){
   const thisM=getMonth(0), nextM=getMonth(1);
-  const thisInc=data.filter(e=>{ const d=e.py||e.pd; return d&&d.startsWith(thisM)&&['已完成','預計收款'].includes(e.status); }).reduce((s,e)=>s+(+e.fee||0),0);
+  const thisInc=data.filter(e=>{ const d=e.py||e.pd; return d&&d.startsWith(thisM)&&['已完成','待收款'].includes(e.status); }).reduce((s,e)=>s+(+e.fee||0),0);
   const nextInc=data.filter(e=>{ const d=e.py||e.pd; return d&&d.startsWith(nextM)&&!['已完成'].includes(e.status); }).reduce((s,e)=>s+(+e.fee||0),0);
-  const unpaid=data.filter(e=>e.status==='預計收款').reduce((s,e)=>s+(+e.fee||0),0);
+  const unpaid=data.filter(e=>e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
   const total=data.filter(e=>e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
   return{thisInc,nextInc,unpaid,total};
 }
@@ -524,7 +562,7 @@ function rStatsKanban(){
   const done=data.filter(e=>e.status==='已完成').length;
   const wip=data.filter(e=>['腳本撰寫','待拍攝','待剪輯','校稿中'].includes(e.status)).length;
   const pendPub=data.filter(e=>e.status==='待發布').length;
-  const pendPay=data.filter(e=>e.status==='預計收款').length;
+  const pendPay=data.filter(e=>e.status==='待收款').length;
   document.getElementById('stats-kanban').innerHTML=
     `<div class="sc"><div class="sl">總合作數</div><div class="sv">${total}</div></div>`+
     `<div class="sc"><div class="sl">已完成</div><div class="sv" style="color:#3D7875">${done}</div></div>`+
@@ -616,7 +654,13 @@ function rTable(){
     rows.sort((a,b)=>{
       let av=a[sortKey]||'', bv=b[sortKey]||'';
       if(sortKey==='fee'){av=Number(a.fee)||0; bv=Number(b.fee)||0; return (av-bv)*sortDir;}
-      return av.localeCompare(bv, 'zh-TW')*sortDir;
+      const primary = av.localeCompare(bv, 'zh-TW')*sortDir;
+      // 狀態排序時，同狀態內按撥款日從近到遠
+      if(sortKey==='status' && primary===0){
+        const ap=a.py||'9999', bp=b.py||'9999';
+        return ap.localeCompare(bp);
+      }
+      return primary;
     });
   }
   document.getElementById('tbody').innerHTML=rows.map(e=>
@@ -681,7 +725,7 @@ function rTracker(){
     {status:'待剪輯',dateKey:'dr',dateLabel:'交稿日'},
     {status:'校稿中',dateKey:'dr',dateLabel:'交稿日'},
     {status:'待發布',dateKey:'pd',dateLabel:'發文日'},
-    {status:'預計收款',dateKey:'py',dateLabel:'撥款日'},
+    {status:'待收款',dateKey:'py',dateLabel:'撥款日'},
   ];
   document.getElementById('tracker').innerHTML=sections.map(sec=>{
     const items=data.filter(e=>e.status===sec.status);
