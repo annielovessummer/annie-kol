@@ -525,9 +525,13 @@ function getMonth(offset=0){const d=new Date();d.setMonth(d.getMonth()+offset);r
 
 function calcIncome(){
   const thisM=getMonth(0), nextM=getMonth(1);
-  const thisInc=data.filter(e=>{ const d=e.py||e.pd; return d&&d.startsWith(thisM)&&['已完成','待收款'].includes(e.status); }).reduce((s,e)=>s+(+e.fee||0),0);
-  const nextInc=data.filter(e=>{ const d=e.py||e.pd; return d&&d.startsWith(nextM)&&!['已完成'].includes(e.status); }).reduce((s,e)=>s+(+e.fee||0),0);
+  // 本月實際收款：ar在本月的已完成案子
+  const thisInc=data.filter(e=>e.ar&&e.ar.startsWith(thisM)&&e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
+  // 下月預計收款：py在下月的待收款案子
+  const nextInc=data.filter(e=>e.py&&e.py.startsWith(nextM)&&e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
+  // 未撥款：所有待收款
   const unpaid=data.filter(e=>e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
+  // 累計收入：所有已完成
   const total=data.filter(e=>e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
   return{thisInc,nextInc,unpaid,total};
 }
