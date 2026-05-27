@@ -74,12 +74,12 @@ body{font-family:-apple-system,'PingFang TC',sans-serif;background:#F5FAFA;color
 
 /* TABLE */
 .twrap{background:#fff;border:1px solid #D4F0EE;border-radius:10px;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:900px}
+table{width:100%;border-collapse:collapse}
 th{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5A9E99;padding:10px 12px;text-align:left;background:#F8FCFC;border-bottom:1px solid #D4F0EE;white-space:nowrap}
 tbody tr{border-bottom:1px solid #EEF8F7}
 tbody tr:last-child{border-bottom:none}
 tbody tr:hover{background:#F8FCFC}
-td{padding:10px 12px;font-size:13px;vertical-align:middle;white-space:nowrap}
+td{padding:10px 8px;font-size:13px;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .td-type{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tbr{font-weight:700}
 .tfe{font-family:'Futura','Century Gothic',sans-serif;font-size:13px;font-weight:500;color:#0ABAB5}
@@ -195,6 +195,7 @@ td{padding:10px 12px;font-size:13px;vertical-align:middle;white-space:nowrap}
     <div class="stats5" id="stats-table"></div>
     <div class="sh"><div class="st">所有合作</div><button class="bp" onclick="openM()">＋ 新增</button></div>
     <div class="twrap"><table>
+      <colgroup><col style="width:12%"><col style="width:15%"><col style="width:8%"><col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%"><col style="width:7%"><col style="width:7%"><col style="width:7%"><col style="width:5%"><col style="width:4%"></colgroup>
       <thead><tr>
         <th onclick="sortTable('brand')" style="cursor:pointer">品牌 <span id="sort-brand"></span></th>
         <th>項目</th>
@@ -289,7 +290,6 @@ const SCAN_DL=[
   {key:'sh',label:'拍攝',statuses:['待拍攝']},
   {key:'dr',label:'交稿',statuses:['待剪輯','校稿中']},
   {key:'pd',label:'發文',statuses:['待發布']},
-  {key:'py',label:'撥款',statuses:['待收款']},
 ];
 
 const BUILTIN_DATA=[
@@ -432,41 +432,7 @@ let isSaving=false;
 
 function loadData(){
   document.getElementById('loading').style.display='flex';
-  
-  // Use JSONP to avoid CORS
-  window._sheetCallback = function(json) {
-    try {
-      if(json.status==='ok' && json.data && json.data.length>0){
-        data = json.data.map(e=>({
-          ...e,
-          id: Number(e.id)||0,
-          fee: Number(e.fee)||0,
-          sc: fmtDate(e.sc),
-          sh: fmtDate(e.sh),
-          dr: fmtDate(e.dr),
-          pd: fmtDate(e.pd),
-          py: fmtDate(e.py),
-          ar: fmtDate(e.ar),
-        })).filter(e=>e.id>0);
-        nid = Math.max(...data.map(e=>e.id)) + 1;
-      } else {
-        data = BUILTIN_DATA.map(e=>({...e}));
-        nid = Math.max(...data.map(e=>e.id)) + 1;
-        saveData(data);
-      }
-    } catch(err) {
-      console.error('資料處理失敗', err);
-      data = BUILTIN_DATA.map(e=>({...e}));
-      nid = Math.max(...data.map(e=>e.id)) + 1;
-    }
-    document.getElementById('loading').style.display='none';
-    // Remove script tag
-    const s = document.getElementById('jsonp-script');
-    if(s) s.remove();
-    rAll();
-  };
 
-  // Timeout fallback
   const timer = setTimeout(function(){
     console.warn('載入逾時，使用內建資料');
     data = BUILTIN_DATA.map(e=>({...e}));
@@ -475,23 +441,44 @@ function loadData(){
     rAll();
   }, 8000);
 
-  window._sheetCallbackWithTimer = function(json) {
+  window._sheetCB = function(json){
     clearTimeout(timer);
-    window._sheetCallback(json);
+    try {
+      if(json.status==='ok' && json.data && json.data.length>0){
+        data = json.data.map(e=>({
+          ...e,
+          id: Number(e.id)||0,
+          fee: Number(e.fee)||0,
+          sc: fmtDate(e.sc), sh: fmtDate(e.sh),
+          dr: fmtDate(e.dr), pd: fmtDate(e.pd),
+          py: fmtDate(e.py), ar: fmtDate(e.ar),
+        })).filter(e=>e.id>0);
+        nid = Math.max(...data.map(e=>e.id)) + 1;
+      } else {
+        data = BUILTIN_DATA.map(e=>({...e}));
+        nid = Math.max(...data.map(e=>e.id)) + 1;
+        saveData(data);
+      }
+    } catch(err){
+      data = BUILTIN_DATA.map(e=>({...e}));
+      nid = Math.max(...data.map(e=>e.id)) + 1;
+    }
+    const s=document.getElementById('jsonp-s');if(s)s.remove();
+    document.getElementById('loading').style.display='none';
+    rAll();
   };
 
-  const script = document.createElement('script');
-  script.id = 'jsonp-script';
-  script.src = SCRIPT_URL + '?callback=_sheetCallbackWithTimer&t=' + Date.now();
-  script.onerror = function() {
+  const s = document.createElement('script');
+  s.id = 'jsonp-s';
+  s.src = SCRIPT_URL + '?callback=_sheetCB&t=' + Date.now();
+  s.onerror = function(){
     clearTimeout(timer);
-    console.error('載入失敗，使用內建資料');
     data = BUILTIN_DATA.map(e=>({...e}));
     nid = Math.max(...data.map(e=>e.id)) + 1;
     document.getElementById('loading').style.display='none';
     rAll();
   };
-  document.head.appendChild(script);
+  document.head.appendChild(s);
 }
 
 async function initData(){
@@ -589,14 +576,15 @@ function rUpcoming(){
     SCAN_DL.forEach(dl=>{
       if(!dl.statuses.includes(e.status))return;
       const days=daysLeft(e[dl.key]);
-      if(days!==null&&days>=0&&days<=10)items.push({brand:e.brand,type:e.type,label:dl.label,date:e[dl.key],days,status:e.status});
+      if(days!==null&&days<=10)items.push({brand:e.brand,type:e.type,label:dl.label,date:e[dl.key],days,status:e.status});
     });
   });
   items.sort((a,b)=>a.days-b.days);
   const el=document.getElementById('upcoming');
   const rows=items.map(i=>{
     const lc=i.days<=2?'#DEC0B8':i.days<=5?'#D4C8A8':'#A8D0CE';
-    const dl=i.days===0?'今天到期':i.days===1?'明天到期':`剩 ${i.days} 天`;
+    const dl=i.days<0?`逾期 ${Math.abs(i.days)} 天`:i.days===0?'今天到期':i.days===1?'明天到期':`剩 ${i.days} 天`;
+    const dayColor=i.days<0?'#C00000':'#2D2D2D';
     return`<div class="up-item">
       <div class="up-left">
         <div class="up-line" style="background:${lc}"></div>
@@ -607,7 +595,7 @@ function rUpcoming(){
       </div>
       <div class="up-right">
         <span class="up-stage" style="background:${SC[i.status]?.d}18;color:${SC[i.status]?.d}">${i.status}</span>
-        <span class="up-days">${dl}</span>
+        <span class="up-days" style="color:${dayColor}">${dl}</span>
       </div>
     </div>`;
   }).join('');
@@ -655,7 +643,6 @@ function rTable(){
       let av=a[sortKey]||'', bv=b[sortKey]||'';
       if(sortKey==='fee'){av=Number(a.fee)||0; bv=Number(b.fee)||0; return (av-bv)*sortDir;}
       const primary = av.localeCompare(bv, 'zh-TW')*sortDir;
-      // 狀態排序時，同狀態內按撥款日從近到遠
       if(sortKey==='status' && primary===0){
         const ap=a.py||'9999', bp=b.py||'9999';
         return ap.localeCompare(bp);
@@ -729,6 +716,12 @@ function rTracker(){
   ];
   document.getElementById('tracker').innerHTML=sections.map(sec=>{
     const items=data.filter(e=>e.status===sec.status);
+    // 排序：逾期優先，然後按日期近到遠
+    items.sort((a,b)=>{
+      const da=daysLeft(a[sec.dateKey])??999;
+      const db=daysLeft(b[sec.dateKey])??999;
+      return da-db;
+    });
     const rows=items.map(e=>{
       const days=daysLeft(e[sec.dateKey]);
       const cls=days===null?'ok':days<0?'urgent':days<=5?'warn':'ok';
