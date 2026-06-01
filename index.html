@@ -22,8 +22,8 @@ body{font-family:-apple-system,'PingFang TC',sans-serif;background:#F5FAFA;color
 @media(max-width:800px){.stats5k{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:480px){.stats5k{grid-template-columns:repeat(2,1fr)}}
 /* TOP STATS - 清單用 5欄 */
-.stats5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem}
-@media(max-width:800px){.stats5{grid-template-columns:repeat(3,1fr)}}
+.stats5{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:1rem}
+@media(max-width:900px){.stats5{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:500px){.stats5{grid-template-columns:repeat(2,1fr)}}
 .sc{background:#fff;border:1px solid #D4F0EE;border-radius:10px;padding:12px 14px}
 .sl{font-size:13px;font-weight:600;color:#5A9E99;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
@@ -454,14 +454,17 @@ function loadData(){
           py: fmtDate(e.py), ar: fmtDate(e.ar),
         })).filter(e=>e.id>0);
         nid = Math.max(...data.map(e=>e.id)) + 1;
+        window._dataSource = 'sheet';
       } else {
         data = BUILTIN_DATA.map(e=>({...e}));
         nid = Math.max(...data.map(e=>e.id)) + 1;
+        window._dataSource = 'builtin';
         saveData(data);
       }
     } catch(err){
       data = BUILTIN_DATA.map(e=>({...e}));
       nid = Math.max(...data.map(e=>e.id)) + 1;
+      window._dataSource = 'builtin-err';
     }
     const s=document.getElementById('jsonp-s');if(s)s.remove();
     document.getElementById('loading').style.display='none';
@@ -525,15 +528,17 @@ function getMonth(offset=0){const d=new Date();d.setMonth(d.getMonth()+offset);r
 
 function calcIncome(){
   const thisM=getMonth(0), nextM=getMonth(1);
-  // 本月實際收款：ar在本月的已完成案子
-  const thisInc=data.filter(e=>e.ar&&e.ar.startsWith(thisM)&&e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
-  // 下月預計收款：py在下月的待收款案子
+  // 本月已收：ar在本月的已完成
+  const thisAr=data.filter(e=>e.ar&&e.ar.startsWith(thisM)&&e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
+  // 本月預計收入：py在本月的待收款
+  const thisInc=data.filter(e=>e.py&&e.py.startsWith(thisM)&&e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
+  // 下月預計收入：py在下月的待收款
   const nextInc=data.filter(e=>e.py&&e.py.startsWith(nextM)&&e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
   // 未撥款：所有待收款
   const unpaid=data.filter(e=>e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
   // 累計收入：所有已完成
-  const total=data.filter(e=>e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
-  return{thisInc,nextInc,unpaid,total};
+  const total_inc=data.filter(e=>e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
+  return{thisAr,thisInc,nextInc,unpaid,total:total_inc};
 }
 
 function sv(v){
@@ -555,7 +560,7 @@ function rStatsKanban(){
   const pendPub=data.filter(e=>e.status==='待發布').length;
   const pendPay=data.filter(e=>e.status==='待收款').length;
   document.getElementById('stats-kanban').innerHTML=
-    `<div class="sc"><div class="sl">總合作數</div><div class="sv">${total}</div></div>`+
+    `<div class="sc"><div class="sl">總合作數</div><div class="sv">${total}</div><div class="ss" style="font-size:9px;color:#aaa">${window._dataSource==='sheet'?'✓ 雲端同步':'⚠ 離線資料'}</div></div>`+
     `<div class="sc"><div class="sl">已完成</div><div class="sv" style="color:#3D7875">${done}</div></div>`+
     `<div class="sc"><div class="sl">進行中</div><div class="sv" style="color:#0ABAB5">${wip}</div></div>`+
     `<div class="sc"><div class="sl">待發文</div><div class="sv" style="color:#B8960A">${pendPub}</div></div>`+
@@ -564,10 +569,11 @@ function rStatsKanban(){
 
 /* 清單頂部：5個收入統計 */
 function rStatsTable(){
-  const{thisInc,nextInc,unpaid,total}=calcIncome();
+  const{thisAr,thisInc,nextInc,unpaid,total}=calcIncome();
   const allCount=data.length;
   document.getElementById('stats-table').innerHTML=
     `<div class="sc"><div class="sl">總合作數</div><div class="sv">${allCount}</div><div class="ss">所有案子</div></div>`+
+    `<div class="sc"><div class="sl">本月已收</div><div class="sv" style="color:#3D7875">$${(thisAr/1000).toFixed(0)}K</div><div class="ss">NT$ ${thisAr.toLocaleString()}</div></div>`+
     `<div class="sc"><div class="sl">本月預計收入</div><div class="sv" style="color:#0ABAB5">$${(thisInc/1000).toFixed(0)}K</div><div class="ss">NT$ ${thisInc.toLocaleString()}</div></div>`+
     `<div class="sc"><div class="sl">下月預計收入</div><div class="sv" style="color:#7ED8D5">$${(nextInc/1000).toFixed(0)}K</div><div class="ss">NT$ ${nextInc.toLocaleString()}</div></div>`+
     `<div class="sc"><div class="sl">未撥款</div><div class="sv" style="color:#C84040">$${(unpaid/1000).toFixed(0)}K</div><div class="ss">NT$ ${unpaid.toLocaleString()}</div></div>`+
