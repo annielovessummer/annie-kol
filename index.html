@@ -530,12 +530,12 @@ function calcIncome(){
   const thisM=getMonth(0), nextM=getMonth(1);
   // 本月已收：ar在本月的已完成
   const thisAr=data.filter(e=>e.ar&&e.ar.startsWith(thisM)&&e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
-  // 本月預計收入：py在本月的待收款
-  const thisInc=data.filter(e=>e.py&&e.py.startsWith(thisM)&&e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
-  // 下月預計收入：py在下月的待收款
-  const nextInc=data.filter(e=>e.py&&e.py.startsWith(nextM)&&e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
-  // 未撥款：所有待收款
-  const unpaid=data.filter(e=>e.status==='待收款').reduce((s,e)=>s+(+e.fee||0),0);
+  // 本月預計收入：py在本月且非已完成
+  const thisInc=data.filter(e=>e.py&&e.py.startsWith(thisM)&&e.status!=='已完成').reduce((s,e)=>s+(+e.fee||0),0);
+  // 下月預計收入：py在下月且非已完成
+  const nextInc=data.filter(e=>e.py&&e.py.startsWith(nextM)&&e.status!=='已完成').reduce((s,e)=>s+(+e.fee||0),0);
+  // 未撥款：所有非已完成的全部金額
+  const unpaid=data.filter(e=>e.status!=='已完成').reduce((s,e)=>s+(+e.fee||0),0);
   // 累計收入：所有已完成
   const total_inc=data.filter(e=>e.status==='已完成').reduce((s,e)=>s+(+e.fee||0),0);
   return{thisAr,thisInc,nextInc,unpaid,total:total_inc};
