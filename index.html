@@ -293,136 +293,137 @@ const SCAN_DL=[
 ];
 
 const BUILTIN_DATA=[
-  // ── 等待匯款 ──
-  {id:1,  brand:'Numbuzin',           type:'五支影片 1號系列/數字面膜/Fwee唇釉/Fwee妝前/No9精華（美金付款）', fee:37834, sc:'',sh:'',dr:'',pd:'',py:'2026-05-30',ar:'',status:'待收款',note:'6000*5 完成後匯款'},
-  {id:2,  brand:'十方力',             type:'六篇Reels MM*4 白美球*2',                                        fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-07',ar:'',status:'待收款',note:'產品費用待確認'},
-  {id:3,  brand:'雪花秀 AMOREPACIFIC',type:'2個月影片授權 $3000*2個月',                                      fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'2026-02-28',ar:'',status:'待收款',note:''},
-  {id:4,  brand:'Dr.WU',              type:'玻尿酸系列',                                                    fee:6000,  sc:'',sh:'',dr:'',pd:'2026-01-04',py:'2026-03-10',ar:'',status:'待收款',note:''},
-  {id:5,  brand:'Ozio',               type:'卵殼膜系列+廣告主授權1個月+素材授權三個月',                       fee:13000, sc:'',sh:'',dr:'',pd:'2026-02-12',py:'2026-05-25',ar:'',status:'待收款',note:''},
-  {id:6,  brand:'菲那絲',             type:'洗髮精系列',                                                    fee:8000,  sc:'',sh:'',dr:'',pd:'2026-04-09',py:'2026-05-30',ar:'',status:'待收款',note:''},
-  {id:7,  brand:'Dr.WU',              type:'超逆齡肌因再生精華',                                            fee:6000,  sc:'',sh:'',dr:'',pd:'2026-04-11',py:'2026-06-11',ar:'',status:'待收款',note:''},
-  {id:8,  brand:'Kamee',              type:'客製化保健品',                                                  fee:9000,  sc:'',sh:'',dr:'',pd:'2026-04-17',py:'2026-06-16',ar:'',status:'待收款',note:''},
-  {id:9,  brand:'OLAY IPG DXTRA',     type:'水光小白瓶',                                                   fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-08',py:'2026-07-08',ar:'',status:'待收款',note:''},
-  {id:10, brand:'Dr. May 軒郁國際',   type:'紫色防曬',                                                     fee:10000, sc:'',sh:'',dr:'',pd:'2026-05-12',py:'2026-06-10',ar:'',status:'待收款',note:''},
-  {id:11, brand:'TimePhoria 豐光',    type:'7000*6支影片 優惠後39000 分兩次 2nd',                          fee:19500, sc:'',sh:'',dr:'',pd:'2026-06-15',py:'',ar:'',status:'待收款',note:''},
-  // ── 已完成 2026 ──
-  {id:12, brand:'La Glow 毅達創意',   type:'雪凝乳',                fee:8000,  sc:'',sh:'',dr:'',pd:'2026-01-23',py:'2026-02-10',ar:'2026-02-10',status:'已完成',note:'收款 2026/2/10'},
-  {id:13, brand:'OLAY IPG DXTRA',     type:'限動+廣告一週',         fee:2000,  sc:'',sh:'',dr:'',pd:'2025-11-05',py:'2026-01-26',ar:'2026-01-26',status:'已完成',note:'收款 2026/1/26'},
-  {id:14, brand:'KATE',               type:'粉霜*6色、遮瑕液*10色 廣告主*1', fee:8000, sc:'',sh:'',dr:'',pd:'2025-12-19',py:'2026-02-19',ar:'2026-02-09',status:'已完成',note:'收款 2026/2/9'},
-  {id:15, brand:'十方力',             type:'六篇Reels MM*4 白美球*2 第二筆', fee:12929, sc:'',sh:'',dr:'',pd:'',py:'2026-02-07',ar:'2026-02-09',status:'已完成',note:'收款 2026/2/9'},
-  {id:16, brand:'wakemake 天驀',      type:'腮紅液 眼影盤',         fee:5000,  sc:'',sh:'',dr:'',pd:'2026-03-10',py:'2026-05-10',ar:'2026-04-29',status:'已完成',note:'收款 2026/4/29'},
-  {id:17, brand:'未來美 軒郁國際',    type:'PDRN針管系列',          fee:8000,  sc:'',sh:'',dr:'',pd:'2026-03-06',py:'2026-03-30',ar:'2026-03-19',status:'已完成',note:'收款 2026/3/19'},
-  {id:18, brand:'TrueTisane 愛牧遊',  type:'抗老安瓶',              fee:9000,  sc:'',sh:'',dr:'',pd:'2026-03-11',py:'2026-03-30',ar:'2026-03-16',status:'已完成',note:'收款 2026/3/16'},
-  {id:19, brand:'Bioderma 台灣諾奧思',type:'屈臣氏帶逛',            fee:8000,  sc:'',sh:'',dr:'',pd:'2026-03-12',py:'2026-05-30',ar:'2026-04-30',status:'已完成',note:'收款 2026/4/30'},
-  {id:20, brand:'OLAY IPG DXTRA',     type:'胜肽超紅瓶',            fee:8000,  sc:'',sh:'',dr:'',pd:'2026-01-10',py:'2026-03-04',ar:'2026-03-24',status:'已完成',note:'收款 2026/3/24'},
-  {id:21, brand:'AM Fairyland',       type:'腮紅液 廣告主一個月',   fee:7000,  sc:'',sh:'',dr:'',pd:'2025-11-28',py:'2026-02-25',ar:'2026-02-25',status:'已完成',note:'收款 2026/2/25'},
-  {id:22, brand:'本真',               type:'洗髮精',                fee:10936, sc:'',sh:'',dr:'',pd:'2025-11-20',py:'2025-12-15',ar:'2026-01-30',status:'已完成',note:'收款 2026/1/30'},
-  {id:23, brand:'Sexy look',          type:'仙人掌換膚三件組',      fee:7000,  sc:'',sh:'',dr:'',pd:'2025-12-01',py:'2026-01-28',ar:'2026-01-28',status:'已完成',note:'收款 2026/1/28'},
-  {id:24, brand:'TrueTisane 愛牧遊',  type:'限動一則帶連結',        fee:2000,  sc:'',sh:'',dr:'',pd:'2026-01-01',py:'2025-01-30',ar:'2026-01-15',status:'已完成',note:'收款 2026/1/15'},
-  {id:25, brand:'TimePhoria 豐光',    type:'快閃活動*1/腮紅液*1 廣告各一個月 分兩次匯', fee:13000, sc:'',sh:'',dr:'',pd:'2025-10-30',py:'2025-11-30',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
-  {id:26, brand:'TimePhoria 豐光',    type:'TT廣告',                fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'2025-11-30',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
-  {id:27, brand:'牛爾老師',           type:'京城之霜 FB+IG廣告主授權/1周', fee:6000, sc:'',sh:'',dr:'',pd:'2025-11-01',py:'2025-12-05',ar:'2025-12-10',status:'已完成',note:'收款 2025/12/10'},
-  {id:28, brand:'Parnell',            type:'亮白氣墊 廣告一個月',   fee:8000,  sc:'',sh:'',dr:'',pd:'2025-11-25',py:'2025-12-30',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
-  {id:29, brand:'La Glow 毅達創意',   type:'PDRN面膜+痘痘面膜 廣告一個月', fee:8000, sc:'',sh:'',dr:'',pd:'2025-11-27',py:'2025-12-10',ar:'2025-12-10',status:'已完成',note:'收款 2025/12/10'},
-  {id:30, brand:'Dr. May 軒郁國際',   type:'外泌體續約 12/4~1/3',  fee:5000,  sc:'',sh:'',dr:'',pd:'2025-12-04',py:'2026-01-10',ar:'2025-12-24',status:'已完成',note:'收款 2025/12/24'},
-  {id:31, brand:'香港商美美箱',       type:'2026年約共$60000 結清費', fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-05',ar:'2025-12-30',status:'已完成',note:'收款 2025/12/30'},
-  {id:32, brand:'Nivea 亞科',         type:'卸妝水+廣告',           fee:7000,  sc:'',sh:'',dr:'',pd:'2025-09-22',py:'2025-11-30',ar:'2025-12-01',status:'已完成',note:'收款 2025/12/1'},
-  {id:33, brand:'ButyBox 髮本對策',   type:'養髮液影片 廣告主*1 包匡*1', fee:10000, sc:'',sh:'',dr:'',pd:'2025-10-03',py:'2025-11-30',ar:'2025-12-02',status:'已完成',note:'收款 2025/12/2'},
-  {id:34, brand:'ButyBox',            type:'la MEMORIA沐浴乳 可瑞絲角蛋白 授權半年', fee:20000, sc:'',sh:'',dr:'',pd:'',py:'2025-11-30',ar:'2025-12-02',status:'已完成',note:'收款 2025/12/2'},
-  {id:35, brand:'TrueTisane 愛牧遊',  type:'奇蹟逆齡修護組',       fee:7000,  sc:'',sh:'',dr:'',pd:'2025-10-14',py:'',ar:'2025-11-03',status:'已完成',note:'收款 2025/11/3'},
-  {id:36, brand:'Attenir',            type:'淨顏亮膚卸妝油 廣告*1', fee:8000,  sc:'',sh:'',dr:'',pd:'2025-10-20',py:'2025-11-30',ar:'2025-11-25',status:'已完成',note:'收款 2025/11/25'},
-  {id:37, brand:'Solone 寶琦國際',    type:'雙11彩妝影片 廣告主一個月', fee:7000, sc:'',sh:'',dr:'',pd:'2025-11-05',py:'2025-11-30',ar:'2025-12-01',status:'已完成',note:'收款 2025/12/1'},
-  {id:38, brand:'香港商美美箱',       type:'年約第三筆 PONY/IM廣告', fee:18000, sc:'',sh:'',dr:'',pd:'',py:'2025-12-05',ar:'2025-12-01',status:'已完成',note:'收款 2025/12/1'},
-  {id:39, brand:'Dr. May 軒郁國際',   type:'紅外密精華',            fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2025-11-10',ar:'2025-11-20',status:'已完成',note:'收款 2025/11/20'},
-  {id:40, brand:'香港商美美箱',       type:'2026年約 第二筆',       fee:18000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-31',status:'已完成',note:'收款 2025/10/31'},
-  {id:41, brand:'Skintific 豐光',     type:'霧面防曬*1/維他命C精華*1 廣告各一個月', fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-30',status:'已完成',note:'收款 2025/10/30'},
-  {id:42, brand:'Naveen',             type:'影片貼文 買斷照片2張 廣告主3個月', fee:15000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-17',status:'已完成',note:'收款 2025/10/17'},
-  {id:43, brand:'J-Lin 品創',         type:'廣告一個月續約',        fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-08',status:'已完成',note:'收款 2025/10/8'},
-  {id:44, brand:'J-Lin 品創',         type:'新版火山岩滾輪1+1 刷具旅行組 廣告', fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-08',status:'已完成',note:'收款 2025/10/8'},
-  {id:45, brand:'Dr. May 軒郁國際',   type:'影片及照片買斷',        fee:16000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-02',status:'已完成',note:'收款 2025/10/2'},
-  {id:46, brand:'香港商美美箱',       type:'2026年約 第一筆',       fee:18000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-30',status:'已完成',note:'收款 2025/9/30'},
-  {id:47, brand:'Bioré 美周報',       type:'舒柔淨膚卸粧水',        fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-10',status:'已完成',note:'收款 2025/9/10'},
-  {id:48, brand:'Dr. May 軒郁國際',   type:'限動',                  fee:1500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-04',status:'已完成',note:'收款 2025/9/4'},
-  {id:49, brand:'香港商美美箱',       type:"I'm meme 7月投廣素材",  fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-01',status:'已完成',note:'收款 2025/9/1'},
-  {id:50, brand:'Dr. May 軒郁國際',   type:'早C晚B',                fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-28',status:'已完成',note:'收款 2025/8/28'},
-  {id:51, brand:'MEDITHERAPY',        type:'粉潤光系列(精華＋乳霜)', fee:6970,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-25',status:'已完成',note:'收款 2025/8/25'},
-  {id:52, brand:'TrueTisane 愛牧遊',  type:'防曬',                  fee:7000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-15',status:'已完成',note:'收款 2025/8/15'},
-  {id:53, brand:'BeautyPlayer 好玩客',type:'極透淨膚清潔面膜',      fee:9000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-11',status:'已完成',note:'收款 2025/8/11'},
-  {id:54, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-11',status:'已完成',note:'收款 2025/8/11'},
-  {id:55, brand:'Dr. May 軒郁國際',   type:'潤色防曬',              fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-06',status:'已完成',note:'收款 2025/8/6'},
-  {id:56, brand:'Repavar',            type:'100%純玫瑰果油',        fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-25',status:'已完成',note:'收款 2025/7/25'},
-  {id:57, brand:'Bello.U',            type:'肉毒眼霜',              fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-15',status:'已完成',note:'收款 2025/7/15'},
-  {id:58, brand:'Dr. May 軒郁國際',   type:'限動帶連結',            fee:1500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-10',status:'已完成',note:'收款 2025/7/10'},
-  {id:59, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-10',status:'已完成',note:'收款 2025/7/10'},
-  {id:60, brand:'香港商美美箱',       type:'Pony Effect廣告費',     fee:6400,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-01',status:'已完成',note:'收款 2025/7/1'},
-  {id:61, brand:'Dr. May 軒郁國際',   type:'防曬續約',              fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-19',status:'已完成',note:'收款 2025/6/19'},
-  {id:62, brand:'Mude',               type:'打亮系列',              fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-16',status:'已完成',note:'收款 2025/6/16'},
-  {id:63, brand:'La Glow 毅達創意',   type:'美體噴霧',              fee:7000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-10',status:'已完成',note:'收款 2025/6/10'},
-  {id:64, brand:'Dr. May 軒郁國際',   type:'清爽防曬',              fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-22',status:'已完成',note:'收款 2025/5/22'},
-  {id:65, brand:'Miidel',             type:'花瓣面膜',              fee:5656,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-15',status:'已完成',note:'收款 2025/5/15'},
-  {id:66, brand:'牛爾老師',           type:'海生竹精華及水凝膜 FB+IG廣告主一個月', fee:9000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-10',status:'已完成',note:'收款 2025/5/10'},
-  {id:67, brand:'PSK',                type:'防曬組',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-05',status:'已完成',note:'收款 2025/5/5'},
-  {id:68, brand:'香港商美美箱',       type:'2025年約',              fee:54000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-01',status:'已完成',note:'收款 2025/5/1'},
-  {id:69, brand:'香港商美美箱',       type:'Pony Effect氣墊組',     fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
-  {id:70, brand:'SHISEIDO 資生堂',    type:'濾鏡美顏日間防護精華',  fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
-  {id:71, brand:'TrueTisane 愛牧遊',  type:'人蔘面膜',              fee:7000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
-  {id:72, brand:'ULIKE',              type:'超光炮',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:'收款 2025/4/30'},
-  {id:73, brand:'Solone',             type:'蝦皮工具組',            fee:17000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-29',status:'已完成',note:'收款 2025/4/29'},
-  {id:74, brand:'Relove',             type:'泥膜組合',              fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-17',status:'已完成',note:'收款 2025/4/17'},
-  {id:75, brand:'J-Lin 品創',         type:'美妝蛋+廣告',           fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-09',status:'已完成',note:'收款 2025/4/9'},
-  {id:76, brand:'森歐黎漾',           type:'洗髮精+養髮液',         fee:14000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-01',status:'已完成',note:'收款 2025/4/1'},
-  {id:77, brand:'MEDITHERAPY',        type:'金絲抗老組合',          fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-25',status:'已完成',note:'收款 2025/3/25'},
-  {id:78, brand:'Skintific 豐光',     type:'TT廣告主90天',          fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-25',status:'已完成',note:'收款 2025/3/25'},
-  {id:79, brand:'十方力',             type:'天作之盒',              fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-18',status:'已完成',note:'收款 2025/3/18'},
-  {id:80, brand:'Skintific 豐光',     type:'小藍霜*1/綠泥棒*1 廣告各一個月', fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-07',status:'已完成',note:'收款 2025/3/7'},
-  {id:81, brand:'ZIIP',               type:'儀器',                  fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-03',status:'已完成',note:'收款 2025/3/3'},
-  {id:82, brand:'Haptiq',             type:'唇膏組',                fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-24',status:'已完成',note:'收款 2025/2/24'},
-  {id:83, brand:'文森先生',           type:'魔境霜',                fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-14',status:'已完成',note:'收款 2025/2/14'},
-  {id:84, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-10',status:'已完成',note:'收款 2025/2/10'},
-  {id:85, brand:'髮本對策',           type:'廣告加購一個月4平台',   fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-05',status:'已完成',note:'收款 2025/2/5'},
-  {id:86, brand:'香港商美美箱',       type:"I'm meme 氣墊+唇釉",   fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-04',status:'已完成',note:'收款 2025/2/4'},
-  {id:87, brand:'十方力',             type:'白美球',                fee:3500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-30',status:'已完成',note:'收款 2025/1/30'},
-  {id:88, brand:'Dr. Cink',           type:'精華露',                fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-30',status:'已完成',note:'收款 2025/1/30'},
-  {id:89, brand:'鹿卡髮品',           type:'洗髮精 潤髮乳 髮油',   fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-24',status:'已完成',note:'收款 2025/1/24'},
-  {id:90, brand:'Dr. May 軒郁國際',   type:'超V精華',               fee:10000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-23',status:'已完成',note:'收款 2025/1/23'},
-  {id:91, brand:'Skintific 豐光',     type:'小藍瓶面霜+小綠棒',    fee:4250,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-22',status:'已完成',note:'收款 2025/1/22'},
-  {id:92, brand:'Muzigae Mansion',    type:'唇釉15秒',              fee:4000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-13',status:'已完成',note:'收款 2025/1/13'},
-  {id:93, brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-10',status:'已完成',note:'收款 2025/1/10'},
-  {id:94, brand:'香港商美美箱',       type:"I'm meme 修容打亮棒 水光唇釉 柔霧唇釉", fee:6000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-02',status:'已完成',note:'收款 2025/1/2'},
-  {id:95, brand:'Bello.U',            type:'肉毒眼霜 補廣告費',     fee:10000, sc:'',sh:'',dr:'',pd:'',py:'2025-12-24',ar:'2025-12-24',status:'已完成',note:'收款 2025/12/24'},
-  {id:96, brand:'蛋殼北北',           type:'洗面乳+廣告1',          fee:7000,  sc:'',sh:'',dr:'',pd:'2025-11-23',py:'2025-12-31',ar:'2025-12-31',status:'已完成',note:'收款 2025/12/31'},
-  {id:97, brand:'La Glow 毅達創意',   type:'面膜廣告續約一個月',    fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'2026-01-12',ar:'2026-01-12',status:'已完成',note:'收款 2026/1/12'},
-  {id:98, brand:'雪花秀 AMOREPACIFIC',type:'雪花秀氣墊+廣告',       fee:11000, sc:'',sh:'',dr:'',pd:'',py:'2026-01-30',ar:'2026-01-29',status:'已完成',note:'收款 2026/1/29'},
-  {id:99, brand:'香港商美美箱',       type:'PONY廣告費用',          fee:8000,  sc:'',sh:'',dr:'',pd:'2026-02-02',py:'2026-02-02',ar:'2026-02-02',status:'已完成',note:'收款 2026/2/2'},
-  {id:100,brand:'TimePhoria 豐光',    type:'7000*6支影片 優惠後39000 分兩次 1st', fee:19500, sc:'',sh:'',dr:'',pd:'2026-12-17',py:'2026-03-02',ar:'2026-03-02',status:'已完成',note:'收款 2026/3/2'},
-  {id:101,brand:'香港商美美箱',       type:'車馬費',                fee:4000,  sc:'',sh:'',dr:'',pd:'2026-01-07',py:'2026-03-02',ar:'2026-03-02',status:'已完成',note:'收款 2026/3/2'},
-  {id:102,brand:'Dr. May 軒郁國際',   type:'精華限動發布',          fee:2500,  sc:'',sh:'',dr:'',pd:'2026-04-02',py:'2026-04-02',ar:'2026-04-02',status:'已完成',note:'收款 2026/4/2'},
-  {id:103,brand:'寶拉珍選',           type:'8%果酸',                fee:4000,  sc:'',sh:'',dr:'',pd:'2025-10-07',py:'2025-11-30',ar:'2026-12-15',status:'已完成',note:'收款 2026/12/15'},
-  {id:104,brand:'wonjungyo 陪我玩創意',type:'彩妝帶逛 妝容',        fee:6500,  sc:'',sh:'',dr:'',pd:'2025-11-10',py:'2026-02-25',ar:'2026-02-25',status:'已完成',note:'收款 2026/2/25'},
-  // ── 已完成 2024 ──
-  {id:105,brand:'Heme',               type:'臥蠶筆',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:'收款 2024/6/30'},
-  {id:106,brand:'Ohmo!',              type:'面膜、眼膜',            fee:2500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:'收款 2024/6/30'},
-  {id:107,brand:'Xlash',              type:'睫毛生長液、保濕眼膜',  fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:'收款 2024/6/30'},
-  {id:108,brand:'Wuli Skin',          type:'作臉*3',                fee:6500,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-18',status:'已完成',note:'收款 2024/10/18'},
-  {id:109,brand:'Dreame 吹風機',      type:'吹風機',                fee:5000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-23',status:'已完成',note:'收款 2024/10/23'},
-  {id:110,brand:'Ohmo!',              type:'影片買斷費用',          fee:12000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-25',status:'已完成',note:'收款 2024/10/25'},
-  {id:111,brand:'髮本對策',           type:'養髮液、洗髮精',        fee:13500, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-01',status:'已完成',note:'收款 2024/11/1'},
-  {id:112,brand:'La Glow 毅達創意',   type:'逆齡組',                fee:7000,  sc:'',sh:'',dr:'',pd:'2024-10-18',py:'',ar:'2024-11-11',status:'已完成',note:'收款 2024/11/11'},
-  {id:113,brand:'克蘭詩',             type:'黃金雙萃',              fee:16500, sc:'',sh:'',dr:'',pd:'2024-10-07',py:'',ar:'2024-11-15',status:'已完成',note:'收款 2024/11/15'},
-  {id:114,brand:'Maybelline',         type:'底膏+睫毛膏*4',         fee:6000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-15',status:'已完成',note:'收款 2024/11/15'},
-  {id:115,brand:'文森先生',           type:'氣墊+蜜粉',             fee:8000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-20',status:'已完成',note:'收款 2024/11/20'},
-  {id:116,brand:'新肌霓',             type:'淨痘凝露',              fee:9000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-25',status:'已完成',note:'收款 2024/11/25'},
-  {id:117,brand:'La Glow 毅達創意',   type:'廣告授權續一個月',      fee:3000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-10',status:'已完成',note:'收款 2024/12/10'},
-  {id:118,brand:'UncleWu',            type:'乾洗髮+買斷',           fee:17000, sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-24',status:'已完成',note:'收款 2024/12/24'},
-  {id:119,brand:'Love Liner',         type:'眼線液筆',              fee:4000,  sc:'',sh:'',dr:'',pd:'2024-11-07',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
-  {id:120,brand:'kenei',              type:'便秘藥文章',            fee:2000,  sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-27',status:'已完成',note:'收款 2024/12/27'},
-  {id:121,brand:'倩碧',               type:'水磁場',                fee:23489, sc:'',sh:'',dr:'',pd:'2024-10-24',py:'',ar:'2024-12-30',status:'已完成',note:'收款 2024/12/30'},
-  {id:122,brand:'美力時尚',           type:'影片買斷費用',           fee:15000, sc:'',sh:'',dr:'',pd:'2026-05-07',py:'2026-06-07',ar:'',status:'待收款',note:''},
-  {id:123,brand:'OLAY',               type:'IG+FB Reels & Story廣告 6/10-6/18 9天', fee:1000, sc:'',sh:'',dr:'',pd:'2026-06-10',py:'2026-08-10',ar:'',status:'待收款',note:''},
-  {id:124,brand:'OLAY',               type:'IG+FB Reels & Story廣告 5/15-5/31 17天', fee:2000, sc:'',sh:'',dr:'',pd:'2026-05-15',py:'2026-07-15',ar:'',status:'待收款',note:''},
-  {id:125,brand:'Solone',             type:'生粉撲系列',             fee:6000,  sc:'',sh:'',dr:'',pd:'2026-05-15',py:'2026-06-15',ar:'',status:'待收款',note:''},
-  {id:126,brand:'未來美 軒郁國際',    type:'618活動檔期+廣告',       fee:8000,  sc:'',sh:'',dr:'',pd:'2026-06-08',py:'2026-07-08',ar:'',status:'待收款',note:''},
-  {id:127,brand:'BIOHEAL BOH',        type:'噴霧+乳霜',             fee:6000,  sc:'',sh:'',dr:'',pd:'2026-05-28',py:'2026-06-28',ar:'',status:'待收款',note:''},
+  {id:131,brand:'安妞美學',type:'肉毒+廣告+官網投廣各1',fee:9000,sc:'',sh:'',dr:'',pd:'2026-05-19',py:'2026-06-29',ar:'',status:'待收款',note:'聖洋科技'},
+  {id:130,brand:'Dr.WU',type:'美顏濾鏡UV妝前乳',fee:6000,sc:'2026-05-25',sh:'2026-06-01',dr:'2026-06-05',pd:'2026-06-15',py:'2026-07-15',ar:'',status:'待拍攝',note:''},
+  {id:129,brand:'KATE',type:'Threads照片文',fee:1500,sc:'',sh:'',dr:'',pd:'2026-05-25',py:'2026-06-26',ar:'',status:'待收款',note:''},
+  {id:128,brand:'BIOHEAL BOH',type:'噴霧+乳霜',fee:6000,sc:'2026-05-22',sh:'2026-05-30',dr:'2026-05-31',pd:'2026-05-28',py:'2026-06-28',ar:'',status:'校稿中',note:''},
+  {id:127,brand:'未來美 軒郁國際',type:'618活動檔期+廣告1m',fee:8000,sc:'2026-05-26',sh:'2026-05-31',dr:'2026-06-03',pd:'2026-06-08',py:'2026-07-10',ar:'',status:'待剪輯',note:''},
+  {id:126,brand:'Solone 寶琦國際',type:'生粉撲系列',fee:6000,sc:'',sh:'',dr:'',pd:'2026-05-15',py:'2026-06-15',ar:'',status:'待收款',note:''},
+  {id:125,brand:'OLAY IPG DXTRA',type:'超紅瓶 IG+FB Reels & Story 廣告2週',fee:2000,sc:'',sh:'',dr:'',pd:'',py:'2026-07-15',ar:'',status:'待收款',note:''},
+  {id:124,brand:'美力時尚',type:'買斷費用',fee:15000,sc:'',sh:'',dr:'',pd:'',py:'2026-06-07',ar:'',status:'待收款',note:''},
+  {id:123,brand:'KATE',type:'怪獸唇膏系列+廣告1個月',fee:8000,sc:'2026-05-14',sh:'2026-05-28',dr:'2026-06-04',pd:'2026-06-19',py:'2026-07-25',ar:'',status:'待剪輯',note:''},
+  {id:122,brand:'蛋殼北北',type:'加購廣告',fee:3000,sc:'',sh:'',dr:'',pd:'',py:'2026-05-13',ar:'2026-05-13',status:'已完成',note:''},
+  {id:1,brand:'Numbuzin',type:'五支影片 1號系列/數字面膜/Fwee唇釉',fee:37834,sc:'',sh:'',dr:'',pd:'',py:'2026-05-30',ar:'2026-05-29',status:'已完成',note:'6000*5 完成後匯款'},
+  {id:2,brand:'十方力',type:'六篇Reels MM*4 白美球*2',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'2026-06-25',ar:'',status:'待收款',note:'產品費用待確認'},
+  {id:3,brand:'雪花秀 AMOREPACIFIC',type:'2個月影片授權 $3000*2個月',fee:6000,sc:'',sh:'',dr:'',pd:'',py:'2026-02-28',ar:'',status:'待收款',note:''},
+  {id:4,brand:'Dr.WU',type:'玻尿酸系列',fee:6000,sc:'',sh:'',dr:'',pd:'2026-01-04',py:'2026-03-10',ar:'2026-02-25',status:'已完成',note:''},
+  {id:5,brand:'Ozio',type:'卵殼膜系列+廣告主授權1個月+素材授權三個月',fee:13000,sc:'',sh:'',dr:'',pd:'2026-02-12',py:'2026-05-25',ar:'2026-05-25',status:'已完成',note:''},
+  {id:6,brand:'菲那絲',type:'洗髮精系列',fee:8000,sc:'',sh:'',dr:'',pd:'2026-04-09',py:'2026-07-31',ar:'',status:'待收款',note:'陪我玩創意 末五碼49683'},
+  {id:7,brand:'Dr.WU',type:'超逆齡肌因再生精華',fee:6000,sc:'',sh:'',dr:'',pd:'2026-04-11',py:'2026-06-11',ar:'',status:'待收款',note:''},
+  {id:8,brand:'Kamee',type:'客製化保健品+廣告1m',fee:12000,sc:'',sh:'',dr:'',pd:'2026-04-17',py:'2026-06-16',ar:'',status:'待收款',note:''},
+  {id:9,brand:'OLAY IPG DXTRA',type:'水光小白瓶',fee:10000,sc:'',sh:'',dr:'',pd:'2026-05-08',py:'2026-07-08',ar:'',status:'待收款',note:''},
+  {id:10,brand:'Dr. May 軒郁國際',type:'紫色防曬',fee:10000,sc:'',sh:'',dr:'',pd:'2026-05-12',py:'2026-06-10',ar:'',status:'待收款',note:''},
+  {id:11,brand:'TimePhoria 豐光',type:'7000*6支影片 優惠後39000 分兩次 2nd',fee:19500,sc:'',sh:'',dr:'',pd:'2026-06-15',py:'',ar:'',status:'待收款',note:''},
+  {id:12,brand:'La Glow 毅達創意',type:'雪凝乳',fee:8000,sc:'',sh:'',dr:'',pd:'2026-01-23',py:'2026-02-10',ar:'2026-02-10',status:'已完成',note:''},
+  {id:13,brand:'OLAY IPG DXTRA',type:'限動+廣告一週',fee:2000,sc:'',sh:'',dr:'',pd:'2025-11-05',py:'2026-01-26',ar:'2026-01-26',status:'已完成',note:''},
+  {id:14,brand:'KATE',type:'粉霜*6色、遮瑕液*10色 廣告主*1',fee:8000,sc:'',sh:'',dr:'',pd:'2025-12-19',py:'2026-02-19',ar:'2026-02-09',status:'已完成',note:''},
+  {id:15,brand:'十方力',type:'六篇Reels MM*4 白美球*2 第二筆',fee:12929,sc:'',sh:'',dr:'',pd:'',py:'2026-02-07',ar:'2026-02-09',status:'已完成',note:''},
+  {id:16,brand:'wakemake 天驀',type:'腮紅液 眼影盤',fee:5000,sc:'',sh:'',dr:'',pd:'2026-03-10',py:'2026-05-10',ar:'2026-04-29',status:'已完成',note:''},
+  {id:17,brand:'未來美 軒郁國際',type:'PDRN針管系列',fee:8000,sc:'',sh:'',dr:'',pd:'2026-03-06',py:'2026-03-30',ar:'2026-03-19',status:'已完成',note:''},
+  {id:18,brand:'TrueTisane 愛牧遊',type:'抗老安瓶',fee:9000,sc:'',sh:'',dr:'',pd:'2026-03-11',py:'2026-03-30',ar:'2026-03-16',status:'已完成',note:''},
+  {id:19,brand:'Bioderma 台灣諾奧思',type:'屈臣氏帶逛',fee:8000,sc:'',sh:'',dr:'',pd:'2026-03-12',py:'2026-05-30',ar:'2026-04-30',status:'已完成',note:''},
+  {id:20,brand:'OLAY IPG DXTRA',type:'胜肽超紅瓶',fee:8000,sc:'',sh:'',dr:'',pd:'2026-01-10',py:'2026-03-04',ar:'2026-03-24',status:'已完成',note:''},
+  {id:21,brand:'AM Fairyland',type:'腮紅液 廣告主一個月',fee:7000,sc:'',sh:'',dr:'',pd:'2025-11-28',py:'2026-02-25',ar:'2026-02-25',status:'已完成',note:''},
+  {id:22,brand:'本真',type:'洗髮精',fee:10936,sc:'',sh:'',dr:'',pd:'2025-11-20',py:'2025-12-15',ar:'2026-01-30',status:'已完成',note:''},
+  {id:23,brand:'Sexy look',type:'仙人掌換膚三件組',fee:7000,sc:'',sh:'',dr:'',pd:'2025-12-01',py:'2026-01-28',ar:'2026-01-28',status:'已完成',note:''},
+  {id:24,brand:'TrueTisane 愛牧遊',type:'限動一則帶連結',fee:2000,sc:'',sh:'',dr:'',pd:'2026-01-01',py:'2025-01-30',ar:'2026-01-15',status:'已完成',note:''},
+  {id:25,brand:'TimePhoria 豐光',type:'快閃活動*1/腮紅液*1 廣告各一個月',fee:13000,sc:'',sh:'',dr:'',pd:'2025-10-30',py:'2025-11-30',ar:'2025-12-31',status:'已完成',note:''},
+  {id:26,brand:'TimePhoria 豐光',type:'TT廣告',fee:4000,sc:'',sh:'',dr:'',pd:'',py:'2025-11-30',ar:'2025-12-31',status:'已完成',note:''},
+  {id:27,brand:'牛爾老師',type:'京城之霜 FB+IG廣告主授權/1周',fee:6000,sc:'',sh:'',dr:'',pd:'2025-11-01',py:'2025-12-05',ar:'2025-12-10',status:'已完成',note:''},
+  {id:28,brand:'Parnell',type:'亮白氣墊 廣告一個月',fee:8000,sc:'',sh:'',dr:'',pd:'2025-11-25',py:'2025-12-30',ar:'2025-12-31',status:'已完成',note:''},
+  {id:29,brand:'La Glow 毅達創意',type:'PDRN面膜+痘痘面膜 廣告一個月',fee:8000,sc:'',sh:'',dr:'',pd:'2025-11-27',py:'2025-12-10',ar:'2025-12-10',status:'已完成',note:''},
+  {id:30,brand:'Dr. May 軒郁國際',type:'外泌體續約 12/4~1/3',fee:5000,sc:'',sh:'',dr:'',pd:'2025-12-04',py:'2026-01-10',ar:'2025-12-24',status:'已完成',note:''},
+  {id:31,brand:'香港商美美箱',type:'2026年約共$60000 結清費',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'2026-01-05',ar:'2025-12-30',status:'已完成',note:''},
+  {id:32,brand:'Nivea 亞科',type:'卸妝水+廣告',fee:7000,sc:'',sh:'',dr:'',pd:'2025-09-22',py:'2025-11-30',ar:'2025-12-01',status:'已完成',note:''},
+  {id:33,brand:'ButyBox 髮本對策',type:'養髮液影片 廣告主*1 包匡*1',fee:10000,sc:'',sh:'',dr:'',pd:'2025-10-03',py:'2025-11-30',ar:'2025-12-02',status:'已完成',note:''},
+  {id:34,brand:'ButyBox',type:'la MEMORIA沐浴乳 可瑞絲角蛋白 授權半年',fee:20000,sc:'',sh:'',dr:'',pd:'',py:'2025-11-30',ar:'2025-12-02',status:'已完成',note:''},
+  {id:35,brand:'TrueTisane 愛牧遊',type:'奇蹟逆齡修護組',fee:7000,sc:'',sh:'',dr:'',pd:'2025-10-14',py:'',ar:'2025-11-03',status:'已完成',note:''},
+  {id:36,brand:'Attenir',type:'淨顏亮膚卸妝油 廣告*1',fee:8000,sc:'',sh:'',dr:'',pd:'2025-10-20',py:'2025-11-30',ar:'2025-11-25',status:'已完成',note:''},
+  {id:37,brand:'Solone 寶琦國際',type:'雙11彩妝影片 廣告主一個月',fee:7000,sc:'',sh:'',dr:'',pd:'2025-11-05',py:'2025-11-30',ar:'2025-12-01',status:'已完成',note:''},
+  {id:38,brand:'香港商美美箱',type:'年約第三筆 PONY/IM廣告',fee:18000,sc:'',sh:'',dr:'',pd:'',py:'2025-12-05',ar:'2025-12-01',status:'已完成',note:''},
+  {id:39,brand:'Dr. May 軒郁國際',type:'紅外密精華',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'2025-11-10',ar:'2025-11-20',status:'已完成',note:''},
+  {id:40,brand:'香港商美美箱',type:'2026年約 第二筆',fee:18000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-31',status:'已完成',note:''},
+  {id:41,brand:'Skintific 豐光',type:'霧面防曬*1/維他命C精華*1 廣告各一個月',fee:12000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-30',status:'已完成',note:''},
+  {id:42,brand:'Naveen',type:'影片貼文 買斷照片2張 廣告主3個月',fee:15000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-17',status:'已完成',note:''},
+  {id:43,brand:'J-Lin 品創',type:'廣告一個月續約',fee:2000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-08',status:'已完成',note:''},
+  {id:44,brand:'J-Lin 品創',type:'新版火山岩滾輪1+1 刷具旅行組 廣告',fee:12000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-08',status:'已完成',note:''},
+  {id:45,brand:'Dr. May 軒郁國際',type:'影片及照片買斷',fee:16000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-10-02',status:'已完成',note:''},
+  {id:46,brand:'香港商美美箱',type:'2026年約 第一筆',fee:18000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-30',status:'已完成',note:''},
+  {id:47,brand:'Bioré 美周報',type:'舒柔淨膚卸粧水',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-10',status:'已完成',note:''},
+  {id:48,brand:'Dr. May 軒郁國際',type:'限動',fee:1500,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-04',status:'已完成',note:''},
+  {id:49,brand:'香港商美美箱',type:'I\'m meme 7月投廣素材',fee:4000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-09-01',status:'已完成',note:''},
+  {id:50,brand:'Dr. May 軒郁國際',type:'早C晚B',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-28',status:'已完成',note:''},
+  {id:51,brand:'MEDITHERAPY',type:'粉潤光系列(精華＋乳霜)',fee:6970,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-25',status:'已完成',note:''},
+  {id:52,brand:'TrueTisane 愛牧遊',type:'防曬',fee:7000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-15',status:'已完成',note:''},
+  {id:53,brand:'BeautyPlayer 好玩客',type:'極透淨膚清潔面膜',fee:9000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-11',status:'已完成',note:''},
+  {id:54,brand:'La Glow 毅達創意',type:'廣告授權續一個月',fee:3000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-11',status:'已完成',note:''},
+  {id:55,brand:'Dr. May 軒郁國際',type:'潤色防曬',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-08-06',status:'已完成',note:''},
+  {id:56,brand:'Repavar',type:'100%純玫瑰果油',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-25',status:'已完成',note:''},
+  {id:57,brand:'Bello.U',type:'肉毒眼霜',fee:6000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-15',status:'已完成',note:''},
+  {id:58,brand:'Dr. May 軒郁國際',type:'限動帶連結',fee:1500,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-10',status:'已完成',note:''},
+  {id:59,brand:'La Glow 毅達創意',type:'廣告授權續一個月',fee:3000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-10',status:'已完成',note:''},
+  {id:60,brand:'香港商美美箱',type:'Pony Effect廣告費',fee:6400,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-07-01',status:'已完成',note:''},
+  {id:61,brand:'Dr. May 軒郁國際',type:'防曬續約',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-19',status:'已完成',note:''},
+  {id:62,brand:'Mude',type:'打亮系列',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-16',status:'已完成',note:''},
+  {id:63,brand:'La Glow 毅達創意',type:'美體噴霧',fee:7000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-06-10',status:'已完成',note:''},
+  {id:64,brand:'Dr. May 軒郁國際',type:'清爽防曬',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-22',status:'已完成',note:''},
+  {id:65,brand:'Miidel',type:'花瓣面膜',fee:5656,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-15',status:'已完成',note:''},
+  {id:66,brand:'牛爾老師',type:'海生竹精華及水凝膜 FB+IG廣告主一個月',fee:9000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-10',status:'已完成',note:''},
+  {id:67,brand:'PSK',type:'防曬組',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-05',status:'已完成',note:''},
+  {id:68,brand:'香港商美美箱',type:'2025年約',fee:54000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-05-01',status:'已完成',note:''},
+  {id:69,brand:'香港商美美箱',type:'Pony Effect氣墊組',fee:6000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:''},
+  {id:70,brand:'SHISEIDO 資生堂',type:'濾鏡美顏日間防護精華',fee:4000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:''},
+  {id:71,brand:'TrueTisane 愛牧遊',type:'人蔘面膜',fee:7000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:''},
+  {id:72,brand:'ULIKE',type:'超光炮',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-30',status:'已完成',note:''},
+  {id:73,brand:'Solone',type:'蝦皮工具組',fee:17000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-29',status:'已完成',note:''},
+  {id:74,brand:'Relove',type:'泥膜組合',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-17',status:'已完成',note:''},
+  {id:75,brand:'J-Lin 品創',type:'美妝蛋+廣告',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-09',status:'已完成',note:''},
+  {id:76,brand:'森歐黎漾',type:'洗髮精+養髮液',fee:14000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-04-01',status:'已完成',note:''},
+  {id:77,brand:'MEDITHERAPY',type:'金絲抗老組合',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-25',status:'已完成',note:''},
+  {id:78,brand:'Skintific 豐光',type:'TT廣告主90天',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-25',status:'已完成',note:''},
+  {id:79,brand:'十方力',type:'天作之盒',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-18',status:'已完成',note:''},
+  {id:80,brand:'Skintific 豐光',type:'小藍霜*1/綠泥棒*1 廣告各一個月',fee:12000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-07',status:'已完成',note:''},
+  {id:81,brand:'ZIIP',type:'儀器',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-03-03',status:'已完成',note:''},
+  {id:82,brand:'Haptiq',type:'唇膏組',fee:4000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-24',status:'已完成',note:''},
+  {id:83,brand:'文森先生',type:'魔境霜',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-14',status:'已完成',note:''},
+  {id:84,brand:'La Glow 毅達創意',type:'廣告授權續一個月',fee:3000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-10',status:'已完成',note:''},
+  {id:85,brand:'髮本對策',type:'廣告加購一個月4平台',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-05',status:'已完成',note:''},
+  {id:86,brand:'香港商美美箱',type:'I\'m meme 氣墊+唇釉',fee:6000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-02-04',status:'已完成',note:''},
+  {id:87,brand:'十方力',type:'白美球',fee:3500,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-30',status:'已完成',note:''},
+  {id:88,brand:'Dr. Cink',type:'精華露',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-30',status:'已完成',note:''},
+  {id:89,brand:'鹿卡髮品',type:'洗髮精 潤髮乳 髮油',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-24',status:'已完成',note:''},
+  {id:90,brand:'Dr. May 軒郁國際',type:'超V精華',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-23',status:'已完成',note:''},
+  {id:91,brand:'Skintific 豐光',type:'小藍瓶面霜+小綠棒',fee:4250,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-22',status:'已完成',note:''},
+  {id:92,brand:'Muzigae Mansion',type:'唇釉15秒',fee:4000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-13',status:'已完成',note:''},
+  {id:93,brand:'La Glow 毅達創意',type:'廣告授權續一個月',fee:3000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-10',status:'已完成',note:''},
+  {id:94,brand:'香港商美美箱',type:'I\'m meme 修容打亮棒 水光唇釉 柔霧唇釉',fee:6000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2025-01-02',status:'已完成',note:''},
+  {id:95,brand:'Bello.U',type:'肉毒眼霜 補廣告費',fee:10000,sc:'',sh:'',dr:'',pd:'',py:'2025-12-24',ar:'2025-12-24',status:'已完成',note:''},
+  {id:96,brand:'蛋殼北北',type:'洗面乳+廣告1',fee:7000,sc:'',sh:'',dr:'',pd:'2025-11-23',py:'2025-12-31',ar:'2025-12-31',status:'已完成',note:''},
+  {id:97,brand:'La Glow 毅達創意',type:'面膜廣告續約一個月',fee:3000,sc:'',sh:'',dr:'',pd:'',py:'2026-01-12',ar:'2026-01-12',status:'已完成',note:''},
+  {id:98,brand:'雪花秀 AMOREPACIFIC',type:'雪花秀氣墊+廣告',fee:11000,sc:'',sh:'',dr:'',pd:'',py:'2026-01-30',ar:'2026-01-29',status:'已完成',note:''},
+  {id:99,brand:'香港商美美箱',type:'PONY廣告費用',fee:8000,sc:'',sh:'',dr:'',pd:'2026-02-02',py:'2026-02-02',ar:'2026-02-02',status:'已完成',note:''},
+  {id:100,brand:'TimePhoria 豐光',type:'7000*6支影片 優惠後39000 分兩次 1st',fee:19500,sc:'',sh:'',dr:'',pd:'2026-12-17',py:'2026-03-02',ar:'2026-03-02',status:'已完成',note:''},
+  {id:101,brand:'香港商美美箱',type:'車馬費',fee:4000,sc:'',sh:'',dr:'',pd:'2026-01-07',py:'2026-03-02',ar:'2026-03-02',status:'已完成',note:''},
+  {id:102,brand:'Dr. May 軒郁國際',type:'精華限動發布',fee:2500,sc:'',sh:'',dr:'',pd:'2026-04-02',py:'2026-04-02',ar:'2026-04-02',status:'已完成',note:''},
+  {id:103,brand:'寶拉珍選',type:'8%果酸',fee:4000,sc:'',sh:'',dr:'',pd:'2025-10-07',py:'2025-11-30',ar:'2025-12-15',status:'已完成',note:''},
+  {id:104,brand:'wonjungyo 陪我玩創意',type:'彩妝帶逛 妝容',fee:6500,sc:'',sh:'',dr:'',pd:'2025-11-10',py:'2026-02-25',ar:'2026-02-25',status:'已完成',note:''},
+  {id:105,brand:'Heme',type:'臥蠶筆',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:''},
+  {id:106,brand:'Ohmo!',type:'面膜、眼膜',fee:2500,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:''},
+  {id:107,brand:'Xlash',type:'睫毛生長液、保濕眼膜',fee:2000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-06-30',status:'已完成',note:''},
+  {id:108,brand:'Wuli Skin',type:'作臉*3',fee:6500,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-18',status:'已完成',note:''},
+  {id:109,brand:'Dreame 吹風機',type:'吹風機',fee:5000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-23',status:'已完成',note:''},
+  {id:110,brand:'Ohmo!',type:'影片買斷費用',fee:12000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-10-25',status:'已完成',note:''},
+  {id:111,brand:'髮本對策',type:'養髮液、洗髮精',fee:13500,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-01',status:'已完成',note:''},
+  {id:112,brand:'La Glow 毅達創意',type:'逆齡組',fee:7000,sc:'',sh:'',dr:'',pd:'2024-10-18',py:'',ar:'2024-11-11',status:'已完成',note:''},
+  {id:113,brand:'克蘭詩',type:'黃金雙萃',fee:16500,sc:'',sh:'',dr:'',pd:'2024-10-07',py:'',ar:'2024-11-15',status:'已完成',note:''},
+  {id:114,brand:'Maybelline',type:'底膏+睫毛膏*4',fee:6000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-15',status:'已完成',note:''},
+  {id:115,brand:'文森先生',type:'氣墊+蜜粉',fee:8000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-20',status:'已完成',note:''},
+  {id:116,brand:'新肌霓',type:'淨痘凝露',fee:9000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-11-25',status:'已完成',note:''},
+  {id:117,brand:'La Glow 毅達創意',type:'廣告授權續一個月',fee:3000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-10',status:'已完成',note:''},
+  {id:118,brand:'UncleWu',type:'乾洗髮+買斷',fee:17000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-24',status:'已完成',note:''},
+  {id:119,brand:'Love Liner',type:'眼線液筆',fee:4000,sc:'',sh:'',dr:'',pd:'2024-11-07',py:'',ar:'2024-12-27',status:'已完成',note:''},
+  {id:120,brand:'kenei',type:'便秘藥文章',fee:2000,sc:'',sh:'',dr:'',pd:'',py:'',ar:'2024-12-27',status:'已完成',note:''},
+  {id:121,brand:'倩碧',type:'水磁場',fee:23489,sc:'',sh:'',dr:'',pd:'2024-10-24',py:'',ar:'2024-12-30',status:'已完成',note:''},
 ];;
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDcI_T8iFjB5jysknXLgm-6H2lsp4l_n8ANxhnnrnP34ZXlv3EBUb9jv82xonRU8gOZQ/exec';
@@ -430,58 +431,63 @@ let data=[];
 let nid=128,eid=null,cv='kanban',chs={};
 let isSaving=false;
 
-function loadData(){
+function processSheetData(json){
+  if(json.status==='ok' && json.data && json.data.length>0){
+    data = json.data.map(e=>({
+      ...e,
+      id: Number(e.id)||0,
+      fee: Number(e.fee)||0,
+      sc: fmtDate(e.sc), sh: fmtDate(e.sh),
+      dr: fmtDate(e.dr), pd: fmtDate(e.pd),
+      py: fmtDate(e.py), ar: fmtDate(e.ar),
+    })).filter(e=>e.id>0);
+    nid = Math.max(...data.map(e=>e.id)) + 1;
+    window._dataSource = 'sheet';
+    return true;
+  }
+  return false;
+}
+
+function useBultin(){
+  data = BUILTIN_DATA.map(e=>({...e}));
+  nid = Math.max(...data.map(e=>e.id)) + 1;
+  window._dataSource = 'builtin';
+}
+
+async function loadData(){
   document.getElementById('loading').style.display='flex';
+  let loaded = false;
 
-  const timer = setTimeout(function(){
-    console.warn('載入逾時，使用內建資料');
-    data = BUILTIN_DATA.map(e=>({...e}));
-    nid = Math.max(...data.map(e=>e.id)) + 1;
-    document.getElementById('loading').style.display='none';
-    rAll();
-  }, 8000);
-
-  window._sheetCB = function(json){
-    clearTimeout(timer);
+  // 方法1: fetch
+  try {
+    const res = await Promise.race([
+      fetch(SCRIPT_URL + '?t=' + Date.now()),
+      new Promise((_,r) => setTimeout(() => r(new Error('timeout')), 6000))
+    ]);
+    const json = await res.json();
+    loaded = processSheetData(json);
+  } catch(e1) {
+    // 方法2: JSONP fallback
     try {
-      if(json.status==='ok' && json.data && json.data.length>0){
-        data = json.data.map(e=>({
-          ...e,
-          id: Number(e.id)||0,
-          fee: Number(e.fee)||0,
-          sc: fmtDate(e.sc), sh: fmtDate(e.sh),
-          dr: fmtDate(e.dr), pd: fmtDate(e.pd),
-          py: fmtDate(e.py), ar: fmtDate(e.ar),
-        })).filter(e=>e.id>0);
-        nid = Math.max(...data.map(e=>e.id)) + 1;
-        window._dataSource = 'sheet';
-      } else {
-        data = BUILTIN_DATA.map(e=>({...e}));
-        nid = Math.max(...data.map(e=>e.id)) + 1;
-        window._dataSource = 'builtin';
-        saveData(data);
-      }
-    } catch(err){
-      data = BUILTIN_DATA.map(e=>({...e}));
-      nid = Math.max(...data.map(e=>e.id)) + 1;
-      window._dataSource = 'builtin-err';
-    }
-    const s=document.getElementById('jsonp-s');if(s)s.remove();
-    document.getElementById('loading').style.display='none';
-    rAll();
-  };
+      loaded = await new Promise((resolve) => {
+        const timer = setTimeout(() => resolve(false), 6000);
+        window._sheetCB = function(json){
+          clearTimeout(timer);
+          const s=document.getElementById('jsonp-s');if(s)s.remove();
+          resolve(processSheetData(json));
+        };
+        const s = document.createElement('script');
+        s.id = 'jsonp-s';
+        s.src = SCRIPT_URL + '?callback=_sheetCB&t=' + Date.now();
+        s.onerror = () => { clearTimeout(timer); resolve(false); };
+        document.head.appendChild(s);
+      });
+    } catch(e2) { loaded = false; }
+  }
 
-  const s = document.createElement('script');
-  s.id = 'jsonp-s';
-  s.src = SCRIPT_URL + '?callback=_sheetCB&t=' + Date.now();
-  s.onerror = function(){
-    clearTimeout(timer);
-    data = BUILTIN_DATA.map(e=>({...e}));
-    nid = Math.max(...data.map(e=>e.id)) + 1;
-    document.getElementById('loading').style.display='none';
-    rAll();
-  };
-  document.head.appendChild(s);
+  if(!loaded) useBultin();
+  document.getElementById('loading').style.display='none';
+  rAll();
 }
 
 async function initData(){
