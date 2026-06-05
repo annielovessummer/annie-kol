@@ -528,7 +528,14 @@ function fmtDate(v){
   return String(v);
 }
 function td(){const d=new Date();d.setHours(0,0,0,0);return d;}
-function daysLeft(s){if(!s)return null;return Math.ceil((new Date(s)-td())/864e5);}
+function daysLeft(s){
+  if(!s)return null;
+  // 避免時區問題，直接用字串比較
+  const parts=s.split('-');
+  if(parts.length!==3)return null;
+  const target=new Date(Number(parts[0]),Number(parts[1])-1,Number(parts[2]));
+  return Math.ceil((target-td())/864e5);
+}
 function fmtM(v){return v?'NT$ '+Number(v).toLocaleString():'—';}
 function getMonth(offset=0){const d=new Date();d.setMonth(d.getMonth()+offset);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
 
